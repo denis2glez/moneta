@@ -1,4 +1,5 @@
 use chrono::prelude::*;
+use rust_decimal::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::{fs::File, io::BufReader};
 
@@ -20,9 +21,9 @@ struct Data {
     date_added: DateTime<Utc>,
     tags: Vec<String>,
 
-    max_supply: Option<f64>,
-    circulating_supply: f64,
-    total_supply: f64,
+    max_supply: Option<Decimal>,
+    circulating_supply: Decimal,
+    total_supply: Decimal,
     platform: Option<Platform>,
     cmc_rank: u32,
     last_updated: DateTime<Utc>,
@@ -57,18 +58,18 @@ struct Usd {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Changes {
-    price: f64,
-    volume_24h: f64,
-    percent_change_1h: f64,
-    percent_change_24h: f64,
-    percent_change_7d: f64,
-    percent_change_30d: f64,
-    percent_change_60d: f64,
-    percent_change_90d: f64,
+    price: Decimal,
+    volume_24h: Decimal,
+    percent_change_1h: Decimal,
+    percent_change_24h: Decimal,
+    percent_change_7d: Decimal,
+    percent_change_30d: Decimal,
+    percent_change_60d: Decimal,
+    percent_change_90d: Decimal,
     /// CoinMarketCap's market cap rank as outlined in their methodology.
-    market_cap: f64,
-    market_cap_dominance: f64,
-    fully_diluted_market_cap: f64,
+    market_cap: Decimal,
+    market_cap_dominance: Decimal,
+    fully_diluted_market_cap: Decimal,
     last_updated: DateTime<Utc>,
 }
 
@@ -80,7 +81,6 @@ pub async fn run() -> Result<(), Error> {
     // Read the JSON contents of the file as an instance of `CoinMarketResponse`.
     let res: CoinMarketResponse = serde_json::from_reader(reader)?;
 
-    // println!("body = {}", res.contents.translated);
     println!("body = {:?}", res);
 
     Ok(())
