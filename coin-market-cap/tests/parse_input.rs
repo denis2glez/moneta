@@ -1,6 +1,5 @@
 use std::collections::BTreeSet;
-
-use coin_market_cap::CoinMarketResponse;
+use coin_market_cap::coin_market::CoinMarketResponse;
 
 #[test]
 fn cryptocurrency_listings_latest_1() {
