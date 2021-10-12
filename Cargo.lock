@@ -381,6 +381,7 @@ dependencies = [
  "serde_ignored",
  "serde_json",
  "sqlx",
+ "thiserror",
  "tokio",
 ]
 

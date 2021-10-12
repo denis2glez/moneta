@@ -1,13 +1,11 @@
 //! Module that fetch information from the [CoinMarketCap API](https://coinmarketcap.com/api/documentation/v1/).
 //! Currently, it consumes only the endpoint `/v1/cryptocurrency/listings/latest`   
 
+use crate::configuration;
 use chrono::prelude::*;
 use rust_decimal::prelude::*;
 use serde::{Deserialize, Serialize};
-
-use crate::configuration;
-
-pub type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
+use thiserror::Error;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CoinMarketResponse {
@@ -78,8 +76,16 @@ struct Changes {
     last_updated: DateTime<Utc>,
 }
 
+#[derive(Error, Debug)]
+pub enum CoinMarketError {
+    #[error("Issues loading configuration")]
+    LoadConfig(#[from] config::ConfigError),
+    #[error("Issues during the request to the server")]
+    Request(#[from] reqwest::Error),
+}
+
 /// Make a request to the endpoint `/v1/cryptocurrency/listings/latest` of the CoinMarketCap API.
-pub async fn request_data() -> Result<CoinMarketResponse, Error> {
+pub async fn request_data() -> Result<CoinMarketResponse, CoinMarketError> {
     let config = configuration::load_config()?;
 
     // Pull new data from the server
