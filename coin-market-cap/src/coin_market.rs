@@ -1,3 +1,6 @@
+//! Module that fetch information from the [CoinMarketCap API](https://coinmarketcap.com/api/documentation/v1/).
+//! Currently, it consumes only the endpoint `/v1/cryptocurrency/listings/latest`   
+
 use chrono::prelude::*;
 use rust_decimal::prelude::*;
 use serde::{Deserialize, Serialize};

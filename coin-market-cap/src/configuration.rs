@@ -1,4 +1,8 @@
+//! Manage the application configuration hierarchically using the content of `config` directory.
+
 use serde::Deserialize;
+use sqlx::postgres::PgConnectOptions;
+use sqlx::ConnectOptions;
 use std::convert::{TryFrom, TryInto};
 
 /// Possible runtime environment of the application.
@@ -33,6 +37,7 @@ impl TryFrom<String> for Env {
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Configuration {
+    pub database: DbConfig,
     pub application: AppConfig,
 }
 
@@ -41,6 +46,31 @@ pub struct AppConfig {
     pub port: u16,
     pub host: String,
     pub base_url: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct DbConfig {
+    pub username: String,
+    pub password: String,
+    pub port: u16,
+    pub host: String,
+    pub database_name: String,
+}
+
+impl DbConfig {
+    pub fn without_db(&self) -> PgConnectOptions {
+        PgConnectOptions::new()
+            .host(&self.host)
+            .username(&self.username)
+            .password(&self.password)
+            .port(self.port)
+    }
+
+    pub fn with_db(&self) -> PgConnectOptions {
+        let mut options = self.without_db().database(&self.database_name);
+        options.log_statements(log::LevelFilter::Trace);
+        options
+    }
 }
 
 pub fn load_config() -> Result<Configuration, config::ConfigError> {
@@ -63,9 +93,9 @@ pub fn load_config() -> Result<Configuration, config::ConfigError> {
         config::File::from(configuration_directory.join(environment.as_str())).required(true),
     )?;
 
-    // Add in settings from environment variables (with a prefix of APP and '__' as separator)
-    // E.g. `APP_APPLICATION__PORT=5001 would set `Settings.application.port`
-    settings.merge(config::Environment::with_prefix("app").separator("__"))?;
+    // Add in settings from environment variables (with a prefix of APP and '_' as separator)
+    // E.g. `APP_APPLICATION_PORT=5001 would set `Settings.application.port`
+    settings.merge(config::Environment::with_prefix("app").separator("_"))?;
 
     settings.try_into()
 }
