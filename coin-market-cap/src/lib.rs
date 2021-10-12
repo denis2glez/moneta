@@ -1,12 +1,11 @@
 use chrono::prelude::*;
 use rust_decimal::prelude::*;
 use serde::{Deserialize, Serialize};
-use std::{fs::File, io::BufReader};
 
 pub type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
 
 #[derive(Debug, Serialize, Deserialize)]
-struct CoinMarketResponse {
+pub struct CoinMarketResponse {
     data: Vec<Data>,
     status: Status,
 }
@@ -66,22 +65,15 @@ struct Changes {
     percent_change_30d: Decimal,
     percent_change_60d: Decimal,
     percent_change_90d: Decimal,
-    /// CoinMarketCap's market cap rank as outlined in their methodology.
+    /// CoinMarketCap's market cap rank as outlined in [their methodology](https://coinmarketcap.com/methodology/)
     market_cap: Decimal,
     market_cap_dominance: Decimal,
     fully_diluted_market_cap: Decimal,
     last_updated: DateTime<Utc>,
 }
 
-pub async fn run() -> Result<(), Error> {
-    // Open the file in read-only mode with buffer.
-    let file = File::open("data/cryptocurrency_listings_latest_1.json")?;
-    let reader = BufReader::new(file);
-
-    // Read the JSON contents of the file as an instance of `CoinMarketResponse`.
-    let res: CoinMarketResponse = serde_json::from_reader(reader)?;
-
-    println!("body = {:?}", res);
+pub async fn request_data() -> Result<(), Error> {
+    // Pull new data from the server
 
     Ok(())
 }
