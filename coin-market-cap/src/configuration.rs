@@ -39,6 +39,7 @@ impl TryFrom<String> for Env {
 pub struct Configuration {
     pub database: DbConfig,
     pub application: AppConfig,
+    pub coin_market: CoinMarketConfig,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -46,6 +47,12 @@ pub struct AppConfig {
     pub port: u16,
     pub host: String,
     pub base_url: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct CoinMarketConfig {
+    pub base_url: String,
+    pub api_key: String,
 }
 
 #[derive(Debug, Clone, Deserialize)]

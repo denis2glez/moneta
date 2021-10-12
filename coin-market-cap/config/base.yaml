@@ -8,3 +8,6 @@ database:
   username: "postgres"
   password: "password"
   database_name: "crypto_listings_latest"
+coin_market:
+  base_url: "https://pro-api.coinmarketcap.com"
+  api_key: "secret-token"

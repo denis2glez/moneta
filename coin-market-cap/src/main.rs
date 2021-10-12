@@ -1,9 +1,8 @@
-use coin_market_cap::*;
+use coin_market_cap::coin_market::*;
 
 #[tokio::main]
-async fn main() -> Result<(), coin_market::Error> {
-    let config = configuration::load_config().unwrap();
-    println!("{:?}", config);
-    
+async fn main() -> Result<(), Error> {
+    // let response = request_data().await?;
+
     Ok(())
 }

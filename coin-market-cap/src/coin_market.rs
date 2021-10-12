@@ -5,6 +5,8 @@ use chrono::prelude::*;
 use rust_decimal::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use crate::configuration;
+
 pub type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -74,4 +76,23 @@ struct Changes {
     market_cap_dominance: Decimal,
     fully_diluted_market_cap: Decimal,
     last_updated: DateTime<Utc>,
+}
+
+/// Make a request to the endpoint `/v1/cryptocurrency/listings/latest` of the CoinMarketCap API.
+pub async fn request_data() -> Result<CoinMarketResponse, Error> {
+    let config = configuration::load_config()?;
+
+    // Pull new data from the server
+    let client = reqwest::Client::new();
+    let params = [("start", "1"), ("limit", "5000"), ("convert", "USD")];
+    let response: CoinMarketResponse = client
+        .get(config.coin_market.base_url + "/v1/cryptocurrency/listings/latest")
+        .header("X-CMC_PRO_API_KEY", config.coin_market.api_key)
+        .query(&params)
+        .send()
+        .await?
+        .json()
+        .await?;
+
+    Ok(response)
 }
