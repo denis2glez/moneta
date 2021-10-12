@@ -1,0 +1,84 @@
+{
+    "status": {
+        "timestamp": "2021-10-09T15:55:39.265Z",
+        "error_code": 0,
+        "error_message": null,
+        "elapsed": 650,
+        "credit_count": 25,
+        "notice": null,
+        "total_count": 7177,
+        "ignored_field_1": "--> This is a new field! <--"
+    },
+    "data": [
+        {
+            "ignored_field_2": "--> This is a new field! <--",
+            "id": 1,
+            "name": "Bitcoin",
+            "symbol": "BTC",
+            "slug": "bitcoin",
+            "num_market_pairs": 8439,
+            "date_added": "2013-04-28T00:00:00.000Z",
+            "tags": [
+                "hello"
+            ],
+            "max_supply": 21000000,
+            "circulating_supply": 18838931,
+            "total_supply": 18838931,
+            "platform": null,
+            "cmc_rank": 1,
+            "last_updated": "2021-10-09T15:55:02.000Z",
+            "quote": {
+                "USD": {
+                    "price": 54954.62718016386,
+                    "volume_24h": 31616171993.24802,
+                    "volume_change_24h": 3.4989,
+                    "percent_change_1h": -0.23712895,
+                    "percent_change_24h": 1.476122,
+                    "percent_change_7d": 14.71772904,
+                    "percent_change_30d": 17.09221874,
+                    "percent_change_60d": 21.58099388,
+                    "percent_change_90d": 61.8310501,
+                    "market_cap": 1035286429577.8315,
+                    "market_cap_dominance": 44.5038,
+                    "fully_diluted_market_cap": 1154047170783.44,
+                    "last_updated": "2021-10-09T15:55:02.000Z"
+                }
+            }
+        },
+        {
+            "id": 1027,
+            "name": "Ethereum",
+            "symbol": "ETH",
+            "slug": "ethereum",
+            "num_market_pairs": 4960,
+            "date_added": "2015-08-07T00:00:00.000Z",
+            "tags": [
+                "world"
+            ],
+            "max_supply": null,
+            "circulating_supply": 117857266.9365,
+            "total_supply": 117857266.9365,
+            "platform": null,
+            "cmc_rank": 2,
+            "last_updated": "2021-10-09T15:55:02.000Z",
+            "quote": {
+                "USD": {
+                    "price": 3602.4680353403155,
+                    "volume_24h": 13406051526.984385,
+                    "volume_change_24h": 3.4989,
+                    "percent_change_1h": -0.3216972,
+                    "percent_change_24h": -0.39366563,
+                    "percent_change_7d": 6.0903876,
+                    "percent_change_30d": 2.48036607,
+                    "percent_change_60d": 15.364188,
+                    "percent_change_90d": 68.01057949,
+                    "market_cap": 424577036871.31226,
+                    "market_cap_dominance": 18.2513,
+                    "fully_diluted_market_cap": 424577036871.31,
+                    "ignored_field_3": "--> This is a new field! <--",
+                    "last_updated": "2021-10-09T15:55:02.000Z"
+                }
+            }
+        }
+    ]
+}

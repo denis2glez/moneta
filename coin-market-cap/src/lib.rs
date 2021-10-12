@@ -59,6 +59,7 @@ struct Usd {
 struct Changes {
     price: Decimal,
     volume_24h: Decimal,
+    volume_change_24h: Decimal,
     percent_change_1h: Decimal,
     percent_change_24h: Decimal,
     percent_change_7d: Decimal,
