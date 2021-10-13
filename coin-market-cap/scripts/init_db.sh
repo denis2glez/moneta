@@ -19,8 +19,8 @@ fi
 DB_USER="${POSTGRES_USER:=postgres}"
 # Check if a custom password has been set, otherwise default to 'password'
 DB_PASSWORD="${POSTGRES_PASSWORD:=password}"
-# Check if a custom password has been set, otherwise default to 'crypto_listings_latest'
-DB_NAME="${POSTGRES_DB:=crypto_listings_latest}"
+# Check if a custom password has been set, otherwise default to 'cryptos'
+DB_NAME="${POSTGRES_DB:=cryptos}"
 # Check if a custom port has been set, otherwise default to '5454'
 DB_PORT="${POSTGRES_PORT:=5454}"
 # Check if a custom host has been set, otherwise default to 'localhost'
