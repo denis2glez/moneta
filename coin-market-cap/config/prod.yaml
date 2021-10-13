@@ -1,4 +1,3 @@
 # Production-only configuration
 application:
-  host: 127.0.0.1
-  base_url: "http://127.0.0.1"
+  host: 0.0.0.0
