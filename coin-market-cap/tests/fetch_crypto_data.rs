@@ -1,4 +1,4 @@
-use coin_market_cap::{coin_market::CoinMarketResponse, configuration};
+use coin_market_cap::{coin_market::Response, configuration};
 
 /// Be aware that this test **makes a real request** to the endpoint of the CoinMarketCap API.
 #[tokio::test]
@@ -9,7 +9,7 @@ async fn fetch_crypto_listings_latest() {
     // Pull new data from the server
     let client = reqwest::Client::new();
     let params = [("start", "1"), ("limit", "5000"), ("convert", "USD")];
-    let _response: CoinMarketResponse = client
+    let _response: Response = client
         .get(config.coin_market.base_url + "/v1/cryptocurrency/listings/latest")
         .header("X-CMC_PRO_API_KEY", config.coin_market.api_key)
         .query(&params)

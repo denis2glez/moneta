@@ -1,5 +1,7 @@
-//! Module that fetch information from the [CoinMarketCap API](https://coinmarketcap.com/api/documentation/v1/).
-//! Currently, it consumes only the endpoint `/v1/cryptocurrency/listings/latest`   
+//! Module that fetches information from the [CoinMarketCap API](https://coinmarketcap.com/api/documentation/v1/).
+//! Specifically, it consumes the following endpoints:
+//! - `/v1/cryptocurrency/map`  
+//! - `/v1/cryptocurrency/listings/latest`
 //!
 //! **Remark:** Many cryptocurrencies have the same symbol, for example, there are currently three
 //! cryptocurrencies that commonly refer to themselves by the symbol `HOT`. Moreover, cryptocurrency
@@ -12,7 +14,7 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct CoinMarketResponse {
+pub struct Response {
     data: Vec<Data>,
     status: Status,
 }
@@ -109,21 +111,21 @@ struct Changes {
 }
 
 #[derive(Error, Debug)]
-pub enum CoinMarketError {
+pub enum CmcError {
     #[error("Issues loading configuration")]
     LoadConfig(#[from] config::ConfigError),
     #[error("Issues during the request to the server")]
     Request(#[from] reqwest::Error),
 }
 
-/// Make a request to the endpoint `/v1/cryptocurrency/listings/latest` of the CoinMarketCap API.
+/// Makes a request to the endpoint `/v1/cryptocurrency/listings/latest` of the CoinMarketCap API.
 /// Returns a paginated list of all active cryptocurrencies with latest market data. The default
 /// `market_cap` sort returns cryptocurrency in order of CoinMarketCap's market cap rank.
 pub async fn request_cryto_listings_latest(
     start: u32,
     limit: u32,
     convert: &str,
-) -> Result<CoinMarketResponse, CoinMarketError> {
+) -> Result<Response, CmcError> {
     let config = configuration::load_config()?;
 
     // Pull new data from the server
@@ -133,7 +135,7 @@ pub async fn request_cryto_listings_latest(
         ("limit", limit.to_string()),
         ("convert", convert.to_string()),
     ];
-    let response: CoinMarketResponse = client
+    let response: Response = client
         .get(config.coin_market.base_url + "/v1/cryptocurrency/listings/latest")
         .header("X-CMC_PRO_API_KEY", config.coin_market.api_key)
         .query(&params)
@@ -143,4 +145,51 @@ pub async fn request_cryto_listings_latest(
         .await?;
 
     Ok(response)
+}
+
+/// Module that consumes the endpoint `/v1/cryptocurrency/map`.
+mod map {
+    use super::{CmcError, Platform, Status};
+    use crate::configuration;
+    use chrono::prelude::*;
+    use serde::{Deserialize, Serialize};
+
+    #[derive(Debug, Serialize, Deserialize)]
+    pub struct Response {
+        data: Vec<Data>,
+        status: Status,
+    }
+    #[derive(Debug, Serialize, Deserialize)]
+    struct Data {
+        id: u32,
+        name: String,
+        symbol: String,
+        slug: String,
+        rank: u32,
+        is_active: bool,
+        first_historical_data: DateTime<Utc>,
+        last_historical_data: DateTime<Utc>,
+        platform: Option<Platform>,
+    }
+
+    /// Makes a request to the endpoint `/v1/cryptocurrency/map` of the CoinMarketCap API.
+    /// Returns a mapping of all cryptocurrencies to unique CoinMarketCap `id`s.
+    /// By default this endpoint returns cryptocurrencies that have actively tracked markets on
+    /// supported exchanges. You may receive a map of all inactive cryptocurrencies by passing
+    /// `listing_status=inactive`.
+    pub async fn request_crypto_map() -> Result<Response, CmcError> {
+        let config = configuration::load_config()?;
+
+        // Pull new data from the server
+        let client = reqwest::Client::new();
+        let response: Response = client
+            .get(config.coin_market.base_url + "/v1/cryptocurrency/map")
+            .header("X-CMC_PRO_API_KEY", config.coin_market.api_key)
+            .send()
+            .await?
+            .json()
+            .await?;
+
+        Ok(response)
+    }
 }

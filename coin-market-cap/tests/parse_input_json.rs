@@ -1,11 +1,11 @@
 use std::collections::BTreeSet;
-use coin_market_cap::coin_market::CoinMarketResponse;
+use coin_market_cap::coin_market::Response;
 
 #[test]
 fn cryptocurrency_listings_latest_1() {
     let str_json = include_str!("data/cryptocurrency_listings_latest_1.json");
     // Read the JSON contents of the string as an instance of `CoinMarketResponse`.
-    let _response: CoinMarketResponse =
+    let _response: Response =
         serde_json::from_str(str_json).expect("Failed to parse input!");
 }
 
@@ -13,7 +13,7 @@ fn cryptocurrency_listings_latest_1() {
 fn cryptocurrency_listings_latest_2() {
     let str_json = include_str!("data/cryptocurrency_listings_latest_2.json");
     // Read the JSON contents of the string as an instance of `CoinMarketResponse`.
-    let _response: CoinMarketResponse =
+    let _response: Response =
         serde_json::from_str(str_json).expect("Failed to parse input!");
 }
 
@@ -26,7 +26,7 @@ fn cryptocurrency_listings_latest_ignored_fields() {
     // We will build a set of paths to the unused elements.
     let mut unused = BTreeSet::new();
 
-    let _response: CoinMarketResponse = serde_ignored::deserialize(j_des, |path| {
+    let _response: Response = serde_ignored::deserialize(j_des, |path| {
         unused.insert(path.to_string());
     })
     .expect("Failed to parse input!");
@@ -48,7 +48,7 @@ fn cryptocurrency_listings_latest_ignored_fields_fails() {
     // We will build a set of paths to the unused elements.
     let mut unused = BTreeSet::new();
 
-    let _response: CoinMarketResponse = serde_ignored::deserialize(j_des, |path| {
+    let _response: Response = serde_ignored::deserialize(j_des, |path| {
         unused.insert(path.to_string());
     })
     .expect("Failed to parse input!");
