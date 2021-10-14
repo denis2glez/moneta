@@ -1,4 +1,4 @@
-use coin_market_cap::{coin_market::Response, configuration};
+use coin_market_cap::{coin_market::map::Response, configuration};
 
 /// Be aware that this test **makes a real request** to the endpoint of the CoinMarketCap API.
 #[tokio::test]
