@@ -8,7 +8,7 @@
 ---
 
 <p align="center">
-This project aims to provide a open currency exchange API that connects the traditional foreign
+This project aims to provide an open currency exchange API that connects the traditional foreign
 exchange market with cryptocurrencies.
     <br> 
 </p>

@@ -1,5 +1,5 @@
 //! Module that fetches information from the [CoinMarketCap API](https://coinmarketcap.com/api/documentation/v1/).
-//! Particularly, it contains the following submodules:
+//! It contains the following submodules:
 //! - `map` that consumes the endpoint `/v1/cryptocurrency/map`  
 //! - `listings/latest` that consumes the endpoint `/v1/cryptocurrency/listings/latest`
 //!
@@ -79,7 +79,12 @@ pub enum CmcError {
     Request(#[from] reqwest::Error),
 }
 
-/// Module that consumes the endpoint `/v1/cryptocurrency/map`.
+/// Module that consumes the endpoint `/v1/cryptocurrency/map`. The latter returns a mapping of all
+/// cryptocurrencies to unique CoinMarketCap `id`s. Each cryptocurrency returned includes typical
+/// identifiers such as `name`, `symbol`, and `token_address` for flexible mapping to `id`.
+/// By default this endpoint returns cryptocurrencies that have actively tracked markets on
+/// supported exchanges. You may receive a map of all inactive cryptocurrencies by passing
+/// `listing_status=inactive`.
 pub mod map {
     use super::{CmcError, Platform, Status};
     use crate::configuration;
@@ -126,7 +131,10 @@ pub mod map {
     }
 }
 
-/// Module that consumes the endpoint `/v1/cryptocurrency/listings_latest`.
+/// Module that consumes the endpoint `/v1/cryptocurrency/listings_latest`. The latter returns a
+/// paginated list of all active cryptocurrencies with latest market data. The default `market_cap`
+/// sort returns cryptocurrency in order of CoinMarketCap's market cap rank but you may configure
+/// this call to order by another market ranking field. 
 pub mod listings_latest {
     use crate::configuration;
     use chrono::prelude::*;
