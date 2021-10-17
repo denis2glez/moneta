@@ -13,23 +13,12 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Status {
-    timestamp: DateTime<Utc>,
-    error_code: u32,
-    error_message: Option<String>,
-    elapsed: u32,
-    credit_count: u32,
-    notice: Option<u32>,
-    total_count: u32,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct Platform {
-    id: u32,
-    name: String,
-    symbol: String,
-    slug: String,
-    token_address: String,
+pub struct Platform {
+    pub id: u32,
+    pub name: String,
+    pub symbol: String,
+    pub slug: String,
+    pub token_address: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -77,6 +66,8 @@ pub enum CmcError {
     LoadConfig(#[from] config::ConfigError),
     #[error("Issues during the request to the server")]
     Request(#[from] reqwest::Error),
+    #[error("Issues querying the database")]
+    DbQuery(#[from] sqlx::Error),
 }
 
 /// Module that consumes the endpoint `/v1/cryptocurrency/map`. The latter returns a mapping of all
@@ -86,27 +77,56 @@ pub enum CmcError {
 /// supported exchanges. You may receive a map of all inactive cryptocurrencies by passing
 /// `listing_status=inactive`.
 pub mod map {
-    use super::{CmcError, Platform, Status};
+    use super::{CmcError, Platform};
     use crate::configuration;
     use chrono::prelude::*;
-    use serde::{Deserialize, Serialize};
+    use serde::{
+        self,
+        de::{self, Deserializer, Unexpected},
+        Deserialize, Serialize,
+    };
+
+    #[derive(Debug, Serialize, Deserialize)]
+    pub struct Status {
+        timestamp: DateTime<Utc>,
+        error_code: u32,
+        error_message: Option<String>,
+        elapsed: u32,
+        credit_count: u32,
+        notice: Option<u32>,
+    }
 
     #[derive(Debug, Serialize, Deserialize)]
     pub struct Response {
-        data: Vec<Data>,
-        status: Status,
+        pub data: Vec<Data>,
+        pub status: Status,
     }
     #[derive(Debug, Serialize, Deserialize)]
-    struct Data {
-        id: u32,
-        name: String,
-        symbol: String,
-        slug: String,
-        rank: u32,
-        is_active: bool,
-        first_historical_data: DateTime<Utc>,
-        last_historical_data: DateTime<Utc>,
-        platform: Option<Platform>,
+    pub struct Data {
+        pub id: u32,
+        pub name: String,
+        pub symbol: String,
+        pub slug: String,
+        pub rank: u32,
+        #[serde(deserialize_with = "bool_from_int")]
+        pub is_active: bool,
+        pub first_historical_data: DateTime<Utc>,
+        pub last_historical_data: DateTime<Utc>,
+        pub platform: Option<Platform>,
+    }
+
+    fn bool_from_int<'de, D>(deserializer: D) -> Result<bool, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        match u8::deserialize(deserializer)? {
+            0 => Ok(false),
+            1 => Ok(true),
+            other => Err(de::Error::invalid_value(
+                Unexpected::Unsigned(other as u64),
+                &"zero or one",
+            )),
+        }
     }
 
     /// Makes a request to the endpoint `/v1/cryptocurrency/map` of the CoinMarketCap API.
@@ -134,14 +154,25 @@ pub mod map {
 /// Module that consumes the endpoint `/v1/cryptocurrency/listings_latest`. The latter returns a
 /// paginated list of all active cryptocurrencies with latest market data. The default `market_cap`
 /// sort returns cryptocurrency in order of CoinMarketCap's market cap rank but you may configure
-/// this call to order by another market ranking field. 
+/// this call to order by another market ranking field.
 pub mod listings_latest {
     use crate::configuration;
     use chrono::prelude::*;
     use rust_decimal::Decimal;
     use serde::{Deserialize, Serialize};
 
-    use super::{CmcError, Platform, Status, Usd};
+    use super::{CmcError, Platform, Usd};
+
+    #[derive(Debug, Serialize, Deserialize)]
+    pub struct Status {
+        timestamp: DateTime<Utc>,
+        error_code: u32,
+        error_message: Option<String>,
+        elapsed: u32,
+        credit_count: u32,
+        notice: Option<u32>,
+        total_count: u32,
+    }
 
     #[derive(Debug, Serialize, Deserialize)]
     pub struct Response {

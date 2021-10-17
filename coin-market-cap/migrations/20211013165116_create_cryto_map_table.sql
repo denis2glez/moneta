@@ -1,20 +1,22 @@
 -- Create map of resources to CoinMarketCap IDs
 
-CREATE TABLE platforms ( 
-    platform INTEGER PRIMARY KEY,
-    id INTEGER,
+CREATE TABLE platforms (
+    -- crypto_map's derived blockchain id 
+    id INTEGER PRIMARY KEY,
+    -- cryto_map's base blockchain id (not necessarily unique)
+    platform INTEGER,
     token_address TEXT
 );
 
 CREATE TABLE crypto_map (
     id INTEGER PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
     -- Not necessarily unique!
-    symbol VARCHAR (3),
+    symbol TEXT,
     slug TEXT,
     rank INTEGER,
     is_active BOOLEAN,
     first_historical_data timestamptz NOT NULL,
     last_historical_data timestamptz NOT NULL,
-    platform INTEGER REFERENCES platforms
+    platform INTEGER REFERENCES platforms (id)
 );

@@ -88,7 +88,7 @@ pub fn load_config() -> Result<Configuration, config::ConfigError> {
     settings.merge(config::File::from(configuration_directory.join("base")).required(true))?;
 
     // Detect the running environment.
-    // Default to `development` if unspecified.
+    // Default to `dev` if unspecified.
     let environment: Env = std::env::var("APP_ENVIRONMENT")
         .unwrap_or_else(|_| "dev".into())
         .try_into()
