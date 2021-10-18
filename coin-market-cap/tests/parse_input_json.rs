@@ -5,21 +5,24 @@ use coin_market_cap::{
 };
 use std::collections::BTreeSet;
 
-#[test]
-fn cryptocurrency_listings_latest_1() {
-    let str_json = include_str!("data/cryptocurrency_listings_latest_1.json");
-    // Read the JSON contents of the string as an instance of `CoinMarketResponse`.
-    let _response: listings_latest::Response =
-        serde_json::from_str(str_json).expect("Failed to parse input!");
+/// This macro first includes a UTF-8 json file as a string and then deserializes its content as a
+/// `listings_latest::Response` instance.
+macro_rules! parse_listings_latest_json {
+    // Takes an argument of designator `ident` and creates a test function named `$func_name`.
+    ($func_name:ident) => {
+        #[test]
+        fn $func_name() {
+            let str_json = include_str!(concat!("data/", stringify!($func_name), ".json"));
+            // Read the JSON contents of the string as an instance of `CoinMarketResponse`.
+            let _response: listings_latest::Response = serde_json::from_str(str_json)
+                .expect("Failed to deserializes json file as `listings_latest::Response`!");
+        }
+    };
 }
 
-#[test]
-fn cryptocurrency_listings_latest_2() {
-    let str_json = include_str!("data/cryptocurrency_listings_latest_2.json");
-    // Read the JSON contents of the string as an instance of `CoinMarketResponse`.
-    let _response: listings_latest::Response =
-        serde_json::from_str(str_json).expect("Failed to parse input!");
-}
+parse_listings_latest_json!(cryptocurrency_listings_latest_1);
+
+parse_listings_latest_json!(cryptocurrency_listings_latest_2);
 
 #[test]
 fn cryptocurrency_listings_latest_ignored_fields() {
