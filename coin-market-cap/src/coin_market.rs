@@ -23,41 +23,41 @@ pub struct Platform {
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "UPPERCASE")]
-struct Usd {
-    usd: Changes,
+pub struct Usd {
+    pub usd: Changes,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Changes {
+pub struct Changes {
     /// Latest average trade price across markets.
-    price: Decimal,
+    pub price: Decimal,
     /// A measure of how much of a cryptocurrency was traded in the last 24 hours.
-    volume_24h: Decimal,
-    volume_change_24h: Decimal,
+    pub volume_24h: Decimal,
+    pub volume_change_24h: Decimal,
     /// 1 hour trading price percentage change for each currency.
-    percent_change_1h: Decimal,
+    pub percent_change_1h: Decimal,
     /// 24 hour trading price percentage change for each currency.
-    percent_change_24h: Decimal,
+    pub percent_change_24h: Decimal,
     /// 7 day trading price percentage change for each currency.
-    percent_change_7d: Decimal,
-    percent_change_30d: Decimal,
-    percent_change_60d: Decimal,
-    percent_change_90d: Decimal,
+    pub percent_change_7d: Decimal,
+    pub percent_change_30d: Decimal,
+    pub percent_change_60d: Decimal,
+    pub percent_change_90d: Decimal,
     /// The total market value of a cryptocurrency's circulating supply. It is analogous to the
     /// free-float capitalization in the stock market.
     ///
     /// `Market Cap = Current Price x Circulating Supply`
     ///
     /// (see [details](https://coinmarketcap.com/methodology/))
-    market_cap: Decimal,
-    market_cap_dominance: Decimal,
+    pub market_cap: Decimal,
+    pub market_cap_dominance: Decimal,
     /// The market cap if the max supply was in circulation.
     ///
     /// Fully-diluted market cap `(FDMC) = price x max supply`. If max supply is null, `FDMC =
     /// price x total supply`. If max supply and total supply are infinite or not available,
     /// fully-diluted market cap shows `- -`.
-    fully_diluted_market_cap: Decimal,
-    last_updated: DateTime<Utc>,
+    pub fully_diluted_market_cap: Decimal,
+    pub last_updated: DateTime<Utc>,
 }
 
 #[derive(Error, Debug)]
@@ -176,40 +176,40 @@ pub mod listings_latest {
 
     #[derive(Debug, Serialize, Deserialize)]
     pub struct Response {
-        data: Vec<Data>,
-        status: Status,
+        pub data: Vec<Data>,
+        pub status: Status,
     }
 
     #[derive(Debug, Serialize, Deserialize)]
-    struct Data {
+    pub struct Data {
         /// The CoinMarketCap's `id`.
-        id: u32,
+        pub id: u32,
         /// The cryptocurrency name.
-        name: String,
+        pub name: String,
         /// The cryptocurrency symbol.
         ///
         /// **Remark:** `symbol` is not unique! Prefer CoinMarketCap's `id` as key.
-        symbol: String,
-        slug: String,
+        pub symbol: String,
+        pub slug: String,
         /// Number of market pairs across all exchanges trading each currency.
-        num_market_pairs: u32,
-        date_added: DateTime<Utc>,
-        tags: Vec<String>,
+        pub num_market_pairs: u32,
+        pub date_added: DateTime<Utc>,
+        pub tags: Vec<String>,
         /// Approximation of the maximum amount of coins that will ever exist in the lifetime
         /// of the currency.
-        max_supply: Option<Decimal>,
+        pub max_supply: Option<Decimal>,
         /// The amount of coins that are circulating in the market and are in public hands. It is
         /// analogous to the flowing shares in the stock market.
-        circulating_supply: Decimal,
+        pub circulating_supply: Decimal,
         /// Approximate total amount of coins in existence right now (minus any coins that have been
         /// verifiably burned).
-        total_supply: Decimal,
-        platform: Option<Platform>,
+        pub total_supply: Decimal,
+        pub platform: Option<Platform>,
         /// CoinMarketCap's market cap rank as outlined in [their methodology](https://coinmarketcap.com/methodology/).
         /// Cryptocurrencies are listed by `cmc_rank` by default.
-        cmc_rank: u32,
-        last_updated: DateTime<Utc>,
-        quote: Usd,
+        pub cmc_rank: u32,
+        pub last_updated: DateTime<Utc>,
+        pub quote: Usd,
     }
 
     /// Makes a request to the endpoint `/v1/cryptocurrency/listings/latest` of the CoinMarketCap API.
