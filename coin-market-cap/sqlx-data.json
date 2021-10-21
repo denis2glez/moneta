@@ -1,0 +1,70 @@
+{
+  "db": "PostgreSQL",
+  "38584254eb6385e0d56fb448fbaa7b3de5b433f73ed96d0a046321181fb7ba57": {
+    "query": "INSERT INTO platforms VALUES ($1, $2, $3);",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4",
+          "Text"
+        ]
+      },
+      "nullable": []
+    }
+  },
+  "a7d5850dcc7f3fe6c5b34ac9841867e7ad6d995d5dbe8dc0aa7bc5737d755981": {
+    "query": "INSERT INTO crypto_listings_latest VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,\n                                $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4",
+          "TextArray",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Int4",
+          "Int4",
+          "Text",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Timestamptz"
+        ]
+      },
+      "nullable": []
+    }
+  },
+  "d229f3468204ed4184b4f3e1335d089d9c46b4e416e4caf01a8c4ba3ac6db7aa": {
+    "query": "INSERT INTO crypto_map VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Text",
+          "Text",
+          "Text",
+          "Int4",
+          "Bool",
+          "Timestamptz",
+          "Timestamptz",
+          "Int4"
+        ]
+      },
+      "nullable": []
+    }
+  }
+}
