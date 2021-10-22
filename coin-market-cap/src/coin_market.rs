@@ -215,7 +215,7 @@ pub mod listings_latest {
     /// Makes a request to the endpoint `/v1/cryptocurrency/listings/latest` of the CoinMarketCap API.
     /// Returns a paginated list of all active cryptocurrencies with latest market data. The default
     /// `market_cap` sort returns cryptocurrency in order of CoinMarketCap's market cap rank.
-    pub async fn request_cryto_listings_latest(
+    pub async fn request_crypto_listings_latest(
         start: u32,
         limit: u32,
         convert: &str,

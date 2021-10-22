@@ -14,7 +14,7 @@ pub async fn update_crypto_map(response: map::Response, pool: PgPool) -> Result<
             sqlx::query!(
                 "INSERT INTO platforms VALUES ($1, $2, $3);",
                 data.id as i32,     // crypto_map's derived blockchain id
-                platform.id as i32, // cryto_map's base blockchain id
+                platform.id as i32, // crypto_map's base blockchain id
                 platform.token_address,
             )
             .execute(&pool)
@@ -79,15 +79,6 @@ pub async fn update_crypto_listings_latest(
         .execute(&pool)
         .await?;
     }
-    Ok(())
-}
-
-pub async fn startup() -> Result<(), CmcError> {
-    let config = configuration::load_config()?;
-    let pool = get_connection_pool(&config.database);
-
-    let response = map::request_crypto_map().await?;
-    update_crypto_map(response, pool).await?;
     Ok(())
 }
 

@@ -3,7 +3,7 @@
 CREATE TABLE platforms (
     -- crypto_map's derived blockchain id 
     id INTEGER PRIMARY KEY,
-    -- cryto_map's base blockchain id (not necessarily unique)
+    -- crypto_map's base blockchain id (not necessarily unique)
     platform INTEGER,
     token_address TEXT
 );

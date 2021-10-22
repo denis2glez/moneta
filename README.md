@@ -3,7 +3,7 @@
  <img width=800px height=532px src="https://cdn.britannica.com/53/68353-050-83DDD422/Trading-floor-New-York-Stock-Exchange-City.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center"> <b>cryto-forex</b>: opening the cryptocurrency exchange to the forex market </h3>
+<h3 align="center"> <b>crypto-forex</b>: opening the cryptocurrency exchange to the forex market </h3>
 
 ---
 

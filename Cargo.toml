@@ -1,6 +1,6 @@
 [workspace]
 
 members = [
-    "cryto-forex",
+    "crypto-forex",
     "coin-market-cap",
 ]
