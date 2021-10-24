@@ -18,8 +18,12 @@ fn parse_crypto_listing_1() {
 fn parse_crypto_listing_2() {
     let str_json = include_str!("data/cryptocurrency_listings_latest_2.json");
     // Read the JSON contents of the string as an instance of `listing::Response`.
-    let _response: listing::Response =
+    let response: listing::Response =
         serde_json::from_str(str_json).expect("Failed to parse input!");
+    assert!(
+        response.data.len() == 5000,
+        "Error parsing `cryptocurrency_listing_1.json`"
+    );
 }
 
 #[test]

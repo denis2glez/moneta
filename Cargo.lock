@@ -500,12 +500,16 @@ version = "0.1.0"
 dependencies = [
  "actix-http",
  "actix-web",
- "coin-market-cap",
+ "chrono",
  "config",
  "flexbuffers",
+ "log",
  "reqwest",
+ "rust_decimal",
  "serde",
  "serde_json",
+ "sqlx",
+ "thiserror",
 ]
 
 [[package]]
