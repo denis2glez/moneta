@@ -5,8 +5,13 @@ use std::collections::BTreeSet;
 fn cryptocurrency_listings_latest_1() {
     let str_json = include_str!("data/cryptocurrency_listings_latest_1.json");
     // Read the JSON contents of the string as an instance of `listings_latest::Response`.
-    let _response: listings_latest::Response =
+    let response: listings_latest::Response =
         serde_json::from_str(str_json).expect("Failed to parse input!");
+
+    assert!(
+        response.data.len() == 100,
+        "Error parsing `cryptocurrency_listings_latest_1.json`"
+    );
 }
 
 #[test]
@@ -26,10 +31,15 @@ fn cryptocurrency_listings_latest_ignored_fields() {
     // We will build a set of paths to the unused elements.
     let mut unused = BTreeSet::new();
 
-    let _response: listings_latest::Response = serde_ignored::deserialize(j_des, |path| {
+    let response: listings_latest::Response = serde_ignored::deserialize(j_des, |path| {
         unused.insert(path.to_string());
     })
     .expect("Failed to parse input!");
+
+    assert!(
+        response.data.len() == 2,
+        "Error parsing `cryptocurrency_listings_latest_ignored_fields.json`"
+    );
 
     // These are the ignored keys.
     let mut expected = BTreeSet::new();
@@ -48,11 +58,15 @@ fn cryptocurrency_listings_latest_ignored_fields_fails() {
     // We will build a set of paths to the unused elements.
     let mut unused = BTreeSet::new();
 
-    let _response: listings_latest::Response = serde_ignored::deserialize(j_des, |path| {
+    let response: listings_latest::Response = serde_ignored::deserialize(j_des, |path| {
         unused.insert(path.to_string());
     })
     .expect("Failed to parse input!");
 
+    assert!(
+        response.data.len() == 5000,
+        "Error parsing `cryptocurrency_listings_latest_3.json`"
+    );
     assert!(unused.is_empty(), "The json file contains ignored fields!");
 }
 
@@ -60,5 +74,7 @@ fn cryptocurrency_listings_latest_ignored_fields_fails() {
 fn cryptocurrency_map_1() {
     let str_json = include_str!("data/cryptocurrency_map.json");
     // Read the JSON contents of the string as an instance of `map::Response`.
-    let _response: map::Response = serde_json::from_str(str_json).expect("Failed to parse input!");
+    let response: map::Response = serde_json::from_str(str_json).expect("Failed to parse input!");
+
+    assert!(response.data.len() == 6517, "Error parsing `cryptocurrency_map.json`");
 }
