@@ -14,11 +14,13 @@ serde_json = "1.0.68"
 thiserror = "1.0.30"
 log = "0.4.14"
 
-rust_decimal = { version = "1.16.0", features = ["serde-arbitrary-precision"] }
-
 tokio = { version = "1.12.0", features = ["full"] }
 
 chrono = { version = "0.4.19", features = ["serde"] }
+
+[dependencies.rust_decimal]
+version = "1.16.0"
+features = ["serde-arbitrary-precision", "db-postgres", "db-tokio-postgres"]
 
 [dependencies.config]
 version = "0.11.0"
@@ -41,6 +43,7 @@ features = [
   "chrono",
   "migrate",
   "offline",
+  "decimal",
 ]
 
 

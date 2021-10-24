@@ -1,7 +1,7 @@
 use sqlx::{postgres::PgPoolOptions, PgPool};
 
-use crate::coin_market::{map, CmcError};
-use crate::configuration::{self, DbConfig};
+use crate::coin_market::{listing, map};
+use crate::configuration::DbConfig;
 
 /// Update the databases `crypto_map` and `platforms` with data from `map::Response`.
 // TODO Keep an eye on the development around `sqlx::FromRow`.
@@ -12,9 +12,9 @@ pub async fn update_crypto_map(response: map::Response, pool: PgPool) -> Result<
         if let Some(platform) = &data.platform {
             platform_id = Some(data.id as i32);
             sqlx::query!(
-                "INSERT INTO platforms VALUES ($1, $2, $3);",
+                "INSERT INTO crypto_platform VALUES ($1, $2, $3);",
                 data.id as i32,     // crypto_map's derived blockchain id
-                platform.id as i32, // cryto_map's base blockchain id
+                platform.id as i32, // crypto_map's base blockchain id
                 platform.token_address,
             )
             .execute(&pool)
@@ -39,12 +39,46 @@ pub async fn update_crypto_map(response: map::Response, pool: PgPool) -> Result<
     Ok(())
 }
 
-pub async fn startup() -> Result<(), CmcError> {
-    let config = configuration::load_config()?;
-    let pool = get_connection_pool(&config.database);
+/// Update the database `crypto_listing` with data from `listing::Response`.
+pub async fn update_crypto_listing(
+    response: listing::Response,
+    pool: PgPool,
+) -> Result<(), sqlx::Error> {
+    for data in &response.data {
+        let mut platform_id = None;
+        if data.platform.is_some() {
+            platform_id = Some(data.id as i32);
+        }
 
-    let response = map::request_crypto_map().await?;
-    update_crypto_map(response, pool).await?;
+        sqlx::query!(
+        r#"INSERT INTO crypto_listing VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
+                                $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);"#,
+        data.id as i32,
+        data.num_market_pairs as i32,
+        &data.tags,
+        data.max_supply,
+        data.circulating_supply,
+        data.total_supply,
+        platform_id,
+        data.cmc_rank as i32,
+        "USD",  // data.quote,
+        data.quote.usd.price,
+        data.quote.usd.volume_24h,
+        data.quote.usd.volume_change_24h,
+        data.quote.usd.percent_change_1h,
+        data.quote.usd.percent_change_24h,
+        data.quote.usd.percent_change_7d,
+        data.quote.usd.percent_change_30d,
+        data.quote.usd.percent_change_60d,
+        data.quote.usd.percent_change_90d,
+        data.quote.usd.market_cap,
+        data.quote.usd.market_cap_dominance,
+        data.quote.usd.fully_diluted_market_cap,
+        data.quote.usd.last_updated
+        )
+        .execute(&pool)
+        .await?;
+    }
     Ok(())
 }
 

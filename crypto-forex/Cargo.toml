@@ -1,5 +1,5 @@
 [package]
-name = "cryto-forex"
+name = "crypto-forex"
 authors = ["Denis Deniz González <denis2.glez@gmail.com>"]
 version = "0.1.0"
 edition = "2021"
