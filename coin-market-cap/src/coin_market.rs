@@ -151,11 +151,11 @@ pub mod map {
     }
 }
 
-/// Module that consumes the endpoint `/v1/cryptocurrency/listings_latest`. The latter returns a
+/// Module that consumes the endpoint `/v1/cryptocurrency/listing`. The latter returns a
 /// paginated list of all active cryptocurrencies with latest market data. The default `market_cap`
 /// sort returns cryptocurrency in order of CoinMarketCap's market cap rank but you may configure
 /// this call to order by another market ranking field.
-pub mod listings_latest {
+pub mod listing {
     use crate::configuration;
     use chrono::prelude::*;
     use rust_decimal::Decimal;
@@ -215,7 +215,7 @@ pub mod listings_latest {
     /// Makes a request to the endpoint `/v1/cryptocurrency/listings/latest` of the CoinMarketCap API.
     /// Returns a paginated list of all active cryptocurrencies with latest market data. The default
     /// `market_cap` sort returns cryptocurrency in order of CoinMarketCap's market cap rank.
-    pub async fn request_crypto_listings_latest(
+    pub async fn request_crypto_listing(
         start: u32,
         limit: u32,
         convert: &str,

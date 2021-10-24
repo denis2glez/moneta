@@ -1,13 +1,13 @@
 -- Create a table with the latest listings of cryptocurrencies
 
-CREATE TABLE crypto_listings_latest (
+CREATE TABLE crypto_listing (
     id INTEGER REFERENCES crypto_map,
     num_market_pairs INTEGER,
     tags TEXT[],
     max_supply NUMERIC,
     circulating_supply NUMERIC,
     total_supply NUMERIC,
-    platform INTEGER REFERENCES platforms (id),
+    platform INTEGER REFERENCES crypto_platform (id),
     cmc_rank INTEGER,
 
     quote TEXT,    

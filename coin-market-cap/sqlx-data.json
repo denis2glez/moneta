@@ -15,7 +15,7 @@
     }
   },
   "a7d5850dcc7f3fe6c5b34ac9841867e7ad6d995d5dbe8dc0aa7bc5737d755981": {
-    "query": "INSERT INTO crypto_listings_latest VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,\n                                $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);",
+    "query": "INSERT INTO crypto_listing VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,\n                                $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);",
     "describe": {
       "columns": [],
       "parameters": {

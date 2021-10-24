@@ -1,7 +1,7 @@
 use sqlx::{postgres::PgPoolOptions, PgPool};
 
-use crate::coin_market::{listings_latest, map, CmcError};
-use crate::configuration::{self, DbConfig};
+use crate::coin_market::{listing, map};
+use crate::configuration::DbConfig;
 
 /// Update the databases `crypto_map` and `platforms` with data from `map::Response`.
 // TODO Keep an eye on the development around `sqlx::FromRow`.
@@ -12,7 +12,7 @@ pub async fn update_crypto_map(response: map::Response, pool: PgPool) -> Result<
         if let Some(platform) = &data.platform {
             platform_id = Some(data.id as i32);
             sqlx::query!(
-                "INSERT INTO platforms VALUES ($1, $2, $3);",
+                "INSERT INTO crypto_platform VALUES ($1, $2, $3);",
                 data.id as i32,     // crypto_map's derived blockchain id
                 platform.id as i32, // crypto_map's base blockchain id
                 platform.token_address,
@@ -39,9 +39,9 @@ pub async fn update_crypto_map(response: map::Response, pool: PgPool) -> Result<
     Ok(())
 }
 
-/// Update the database `crypto_listings_latest` with data from `listings_latest::Response`.
-pub async fn update_crypto_listings_latest(
-    response: listings_latest::Response,
+/// Update the database `crypto_listing` with data from `listing::Response`.
+pub async fn update_crypto_listing(
+    response: listing::Response,
     pool: PgPool,
 ) -> Result<(), sqlx::Error> {
     for data in &response.data {
@@ -51,7 +51,7 @@ pub async fn update_crypto_listings_latest(
         }
 
         sqlx::query!(
-        r#"INSERT INTO crypto_listings_latest VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
+        r#"INSERT INTO crypto_listing VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
                                 $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);"#,
         data.id as i32,
         data.num_market_pairs as i32,

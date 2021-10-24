@@ -2,7 +2,7 @@ use coin_market_cap::{coin_market::map::Response, configuration};
 
 /// Be aware that this test **makes a real request** to the endpoint of the CoinMarketCap API.
 #[tokio::test]
-async fn fetch_crypto_listings_latest() {
+async fn fetch_crypto_listing() {
     let config = configuration::load_config().expect("Error loading the configuration!");
     assert_ne!(config.coin_market.api_key , "secret-token", "You must specify your API key!");
 
