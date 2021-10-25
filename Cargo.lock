@@ -381,7 +381,7 @@ dependencies = [
 
 [[package]]
 name = "coin-market-cap"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "chrono",
  "config",
@@ -496,15 +496,20 @@ dependencies = [
 
 [[package]]
 name = "crypto-forex"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "actix-http",
  "actix-web",
+ "chrono",
  "config",
  "flexbuffers",
+ "log",
  "reqwest",
+ "rust_decimal",
  "serde",
  "serde_json",
+ "sqlx",
+ "thiserror",
 ]
 
 [[package]]
