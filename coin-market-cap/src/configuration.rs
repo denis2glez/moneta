@@ -38,14 +38,7 @@ impl TryFrom<String> for Env {
 #[derive(Debug, Clone, Deserialize)]
 pub struct Configuration {
     pub database: DbConfig,
-    pub application: AppConfig,
     pub coin_market: CoinMarketConfig,
-}
-
-#[derive(Debug, Clone, Deserialize)]
-pub struct AppConfig {
-    pub port: u16,
-    pub host: String,
 }
 
 #[derive(Debug, Clone, Deserialize)]

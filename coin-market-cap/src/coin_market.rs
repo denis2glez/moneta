@@ -9,10 +9,13 @@
 
 use chrono::prelude::*;
 use rust_decimal::prelude::*;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
+use sqlx::PgPool;
 use thiserror::Error;
 
-#[derive(Debug, Serialize, Deserialize)]
+use crate::{configuration, database};
+
+#[derive(Debug, Deserialize)]
 pub struct Platform {
     pub id: u32,
     pub name: String,
@@ -21,13 +24,13 @@ pub struct Platform {
     pub token_address: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "UPPERCASE")]
 pub struct Usd {
     pub usd: Changes,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct Changes {
     /// Latest average trade price across markets.
     pub price: Decimal,
@@ -83,10 +86,17 @@ pub mod map {
     use serde::{
         self,
         de::{self, Deserializer, Unexpected},
-        Deserialize, Serialize,
+        Deserialize,
     };
 
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Debug, Deserialize)]
+    pub struct Response {
+        pub data: Vec<Data>,
+        pub status: Status,
+    }
+
+    #[allow(unused)]
+    #[derive(Debug, Deserialize)]
     pub struct Status {
         timestamp: DateTime<Utc>,
         error_code: u32,
@@ -96,12 +106,7 @@ pub mod map {
         notice: Option<u32>,
     }
 
-    #[derive(Debug, Serialize, Deserialize)]
-    pub struct Response {
-        pub data: Vec<Data>,
-        pub status: Status,
-    }
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Debug, Deserialize)]
     pub struct Data {
         pub id: u32,
         pub name: String,
@@ -159,11 +164,18 @@ pub mod listing {
     use crate::configuration;
     use chrono::prelude::*;
     use rust_decimal::Decimal;
-    use serde::{Deserialize, Serialize};
+    use serde::Deserialize;
 
     use super::{CmcError, Platform, Usd};
 
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Debug, Deserialize)]
+    pub struct Response {
+        pub data: Vec<Data>,
+        pub status: Status,
+    }
+
+    #[allow(unused)]
+    #[derive(Debug, Deserialize)]
     pub struct Status {
         timestamp: DateTime<Utc>,
         error_code: u32,
@@ -174,13 +186,7 @@ pub mod listing {
         total_count: u32,
     }
 
-    #[derive(Debug, Serialize, Deserialize)]
-    pub struct Response {
-        pub data: Vec<Data>,
-        pub status: Status,
-    }
-
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Debug, Deserialize)]
     pub struct Data {
         /// The CoinMarketCap's `id`.
         pub id: u32,
@@ -239,5 +245,41 @@ pub mod listing {
             .await?;
 
         Ok(response)
+    }
+}
+
+pub struct App {
+    pool: PgPool,
+}
+
+impl App {
+    pub fn new() -> Self {
+        let config = configuration::load_config().unwrap();
+        let pool = database::get_connection_pool(&config.database);
+        Self { pool }
+    }
+
+    pub async fn fetch_crypto_data(
+        &self,
+        start: u32,
+        limit: u32,
+        convert: &str,
+    ) -> Result<(), CmcError> {
+        let response_map = map::request_crypto_map().await?;
+        let response_listing = listing::request_crypto_listing(start, limit, convert).await?;
+
+        // TODO: Currently we repopulate all tables in each update, this would change to keep the
+        // previous data.
+        database::clear_all_tables(self.pool.clone()).await?;
+        database::update_crypto_map(response_map, self.pool.clone()).await?;
+        database::update_crypto_listing(response_listing, self.pool.clone()).await?;
+
+        Ok(())
+    }
+}
+
+impl Default for App {
+    fn default() -> Self {
+        Self::new()
     }
 }

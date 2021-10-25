@@ -6,7 +6,7 @@ use coin_market_cap::{
 
 #[tokio::test]
 async fn update_crypto_map_db_1() -> Result<(), CmcError> {
-    let str_json = include_str!("data/cryptocurrency_map.json");
+    let str_json = include_str!("data/cryptocurrency_map_50.json");
     // Read the JSON contents of the string as an instance of `map::Response`.
     let response: map::Response = serde_json::from_str(str_json).expect("Failed to parse input!");
 
@@ -18,6 +18,7 @@ async fn update_crypto_map_db_1() -> Result<(), CmcError> {
     let config = configuration::load_config()?;
     let pool = get_connection_pool(&config.database);
 
+    clear_all_tables(pool.clone()).await?;
     update_crypto_map(response, pool).await?;
 
     Ok(())
@@ -25,7 +26,7 @@ async fn update_crypto_map_db_1() -> Result<(), CmcError> {
 
 #[tokio::test]
 async fn update_crypto_listing_db_1() -> Result<(), CmcError> {
-    let str_json = include_str!("data/cryptocurrency_listings_latest_1.json");
+    let str_json = include_str!("data/cryptocurrency_listings_latest_50.json");
     // Read the JSON contents of the string as an instance of `listing::Response`.
     let response: listing::Response =
         serde_json::from_str(str_json).expect("Failed to parse input!");
@@ -38,6 +39,9 @@ async fn update_crypto_listing_db_1() -> Result<(), CmcError> {
     let config = configuration::load_config()?;
     let pool = get_connection_pool(&config.database);
 
+    clear_all_tables(pool.clone()).await?;
+    // First calls previous test function
+    update_crypto_map_db_1()?;
     update_crypto_listing(response, pool).await?;
 
     Ok(())
@@ -65,8 +69,9 @@ async fn update_crypto_populate_db_100_items() -> Result<(), CmcError> {
     let config = configuration::load_config()?;
     let pool = get_connection_pool(&config.database);
 
+    clear_all_tables(pool.clone()).await?;
     update_crypto_map(response_map, pool.clone()).await?;
-    update_crypto_listing(response_listings, pool).await?;
+    update_crypto_listing(response_listings, pool.clone()).await?;
 
     Ok(())
 }

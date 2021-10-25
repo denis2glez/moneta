@@ -9,20 +9,20 @@ fn parse_crypto_listing_1() {
         serde_json::from_str(str_json).expect("Failed to parse input!");
 
     assert!(
-        response.data.len() == 100,
+        response.data.len() == 1,
         "Error parsing `cryptocurrency_listing_1.json`"
     );
 }
 
 #[test]
-fn parse_crypto_listing_2() {
-    let str_json = include_str!("data/cryptocurrency_listings_latest_2.json");
+fn parse_crypto_listing_50() {
+    let str_json = include_str!("data/cryptocurrency_listings_latest_50.json");
     // Read the JSON contents of the string as an instance of `listing::Response`.
     let response: listing::Response =
         serde_json::from_str(str_json).expect("Failed to parse input!");
     assert!(
-        response.data.len() == 5000,
-        "Error parsing `cryptocurrency_listing_1.json`"
+        response.data.len() == 50,
+        "Error parsing `cryptocurrency_listing_50.json`"
     );
 }
 
@@ -55,7 +55,7 @@ fn parse_crypto_listing_ignored_fields() {
 
 #[test]
 fn parse_crypto_listing_ignored_fields_fails() {
-    let str_json = include_str!("data/cryptocurrency_listings_latest_3.json");
+    let str_json = include_str!("data/cryptocurrency_listings_latest_100.json");
 
     let j_des = &mut serde_json::Deserializer::from_str(str_json);
 
@@ -68,20 +68,32 @@ fn parse_crypto_listing_ignored_fields_fails() {
     .expect("Failed to parse input!");
 
     assert!(
-        response.data.len() == 5000,
-        "Error parsing `cryptocurrency_listing_3.json`"
+        response.data.len() == 100,
+        "Error parsing `cryptocurrency_listing_100.json`"
     );
     assert!(unused.is_empty(), "The json file contains ignored fields!");
 }
 
 #[test]
-fn parse_crypto_map_1() {
-    let str_json = include_str!("data/cryptocurrency_map.json");
+fn parse_crypto_map_50() {
+    let str_json = include_str!("data/cryptocurrency_map_50.json");
     // Read the JSON contents of the string as an instance of `map::Response`.
     let response: map::Response = serde_json::from_str(str_json).expect("Failed to parse input!");
 
     assert!(
-        response.data.len() == 6517,
+        response.data.len() == 50,
         "Error parsing `cryptocurrency_map.json`"
+    );
+}
+
+#[test]
+fn parse_crypto_map_0() {
+    let str_json = include_str!("data/cryptocurrency_map_0.json");
+    // Read the JSON contents of the string as an instance of `map::Response`.
+    let response: map::Response = serde_json::from_str(str_json).expect("Failed to parse input!");
+
+    assert!(
+        response.data.len() == 0,
+        "Error parsing empty response data"
     );
 }
