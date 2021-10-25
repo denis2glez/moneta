@@ -93,7 +93,7 @@ fn parse_crypto_map_0() {
     let response: map::Response = serde_json::from_str(str_json).expect("Failed to parse input!");
 
     assert!(
-        response.data.len() == 0,
+        response.data.is_empty(),
         "Error parsing empty response data"
     );
 }

@@ -1,7 +1,9 @@
 [package]
 name = "crypto-forex"
 authors = ["Denis Deniz González <denis2.glez@gmail.com>"]
-version = "0.1.0"
+license = "MIT"
+repository = "https://github.com/denis2glez/moneta"
+version = "0.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

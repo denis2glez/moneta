@@ -21,6 +21,7 @@ exchange market with cryptocurrencies.
 - [Usage](#usage)
 - [Built Using](#built_using)
 - [Acknowledgments](#acknowledgement)
+- [License](#license)
 
 ## 🧐 About <a name = "about"></a>
 
@@ -58,3 +59,6 @@ exchange market with cryptocurrencies.
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
 Thanks to all the developers of the libraries used in the project.
+
+## 📝 License <a name = "license"></a>
+This project is licensed under the MIT license.
