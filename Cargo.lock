@@ -500,7 +500,6 @@ version = "0.1.0"
 dependencies = [
  "actix-http",
  "actix-web",
- "coin-market-cap",
  "config",
  "flexbuffers",
  "reqwest",
