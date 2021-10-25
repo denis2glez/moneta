@@ -1,3 +1,8 @@
+//! Module that retrieves information from the cryptocurrencies database. Fundamentally, it contains
+//! the `CryptoPlatform` struct that represents a cryptocurrency platform used by other, the
+//! `CryptoMap` struct that describes all the characteristics of a specific cryptocurrency and the
+//! `CryptoListing` struct provides accurate and timely data for the cryptoasset.
+
 use chrono::prelude::*;
 use rust_decimal::prelude::*;
 use sqlx::FromRow;
