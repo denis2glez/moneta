@@ -3,16 +3,18 @@ use coin_market_cap::{
     configuration,
     database::*,
 };
+use serial_test::serial;
 
 #[tokio::test]
+#[serial]
 async fn update_crypto_map_db_1() -> Result<(), CmcError> {
     let str_json = include_str!("data/cryptocurrency_map_50.json");
     // Read the JSON contents of the string as an instance of `map::Response`.
     let response: map::Response = serde_json::from_str(str_json).expect("Failed to parse input!");
 
     assert!(
-        response.data.len() == 6517,
-        "Error parsing `cryptocurrency_map.json` (wrong data number)"
+        response.data.len() == 50,
+        "Error parsing `cryptocurrency_map_50.json` (wrong data number)"
     );
 
     let config = configuration::load_config()?;
@@ -25,6 +27,7 @@ async fn update_crypto_map_db_1() -> Result<(), CmcError> {
 }
 
 #[tokio::test]
+#[serial]
 async fn update_crypto_listing_db_1() -> Result<(), CmcError> {
     let str_json = include_str!("data/cryptocurrency_listings_latest_50.json");
     // Read the JSON contents of the string as an instance of `listing::Response`.
@@ -32,22 +35,33 @@ async fn update_crypto_listing_db_1() -> Result<(), CmcError> {
         serde_json::from_str(str_json).expect("Failed to parse input!");
 
     assert!(
-        response.data.len() == 100,
-        "Error parsing `cryptocurrency_listing_1.json` (wrong data number)"
+        response.data.len() == 50,
+        "Error parsing `cryptocurrency_listing_latest_50.json` (wrong data number)"
     );
 
     let config = configuration::load_config()?;
     let pool = get_connection_pool(&config.database);
 
     clear_all_tables(pool.clone()).await?;
-    // First calls previous test function
-    update_crypto_map_db_1()?;
-    update_crypto_listing(response, pool).await?;
+    // For consistency (i.e. foreign key constraint), we must first initialize `crypto_map` table.
+    let str_json = include_str!("data/cryptocurrency_map_50.json");
+    let response_map: map::Response =
+        serde_json::from_str(str_json).expect("Failed to parse input!");
+
+    assert!(
+        response_map.data.len() == 50,
+        "Error parsing `cryptocurrency_map_50.json` (wrong data number)"
+    );
+    update_crypto_map(response_map, pool.clone()).await?;
+
+    // Now we can insert into table `crypto_listing`.
+    update_crypto_listing(response, pool.clone()).await?;
 
     Ok(())
 }
 
-#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+#[tokio::test]
+#[serial]
 async fn update_crypto_populate_db_100_items() -> Result<(), CmcError> {
     let map_json = include_str!("data/cryptocurrency_map_100_ranked.json");
     let listings_json = include_str!("data/cryptocurrency_listings_latest_100.json");
@@ -56,7 +70,7 @@ async fn update_crypto_populate_db_100_items() -> Result<(), CmcError> {
         serde_json::from_str(map_json).expect("Failed to parse input!");
     assert!(
         response_map.data.len() == 100,
-        "Error parsing `cryptocurrency_map_100.json` (wrong data number)"
+        "Error parsing `cryptocurrency_map_100_ranked.json` (wrong data number)"
     );
 
     let response_listings: listing::Response =

@@ -50,3 +50,4 @@ features = [
 
 
 [dev-dependencies]
+serial_test = "0.5.1"
