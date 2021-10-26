@@ -61,5 +61,9 @@ curl -v http://127.0.0.1:8080/health_check
 
 - [ ] Add a REST API to cover the base use case.
 - [ ] Implement a remote procedure call system (i.e. gRPC).
+- [ ] Create unit and integration tests.
+- [ ] Use a tracing library for instrumentation (e.g `tracing` crate).
+- [ ] Add support for mocking (e.g. `fake`, `wiremock`).
+- [ ] Include some micro-benchmarks (e.g. `criterion`).
 - [ ] Add Kubernetes deployment support (use [`minikube`](https://minikube.sigs.k8s.io/docs/),
     [`kubegres`](https://www.kubegres.io/doc/getting-started.html)).

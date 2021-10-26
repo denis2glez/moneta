@@ -1,17 +1,21 @@
-<p align="center">
+<!-- <p align="center">
   <a href="" rel="noopener">
- <img width=800px height=532px src="https://cdn.britannica.com/53/68353-050-83DDD422/Trading-floor-New-York-Stock-Exchange-City.jpg" alt="Project logo"></a>
-</p>
+ <img src="..." alt="Project logo"></a>
+</p> -->
 
 <h3 align="center"> <b>crypto-forex</b>: opening the cryptocurrency exchange to the forex market </h3>
 
 ---
 
-<p align="center">
-This project aims to provide an open currency exchange API that connects the traditional foreign
-exchange market with cryptocurrencies.
-    <br> 
-</p>
+>*"Most theoretical monetary economists, even those who specialised in Foreign Exchanges, made
+>relatively little use of the lessons taught by earlier periods of Foreign Exchange history. It is
+>no wonder that practical experts responsible for devising and executing Foreign Exchange policies
+>so often failed to benefit by the lessons of the past. Much theoretical knowledge and practical
+>experience acquired by our forerunners is being largely wasted by being allowed to fade into
+>oblivion."*
+><p align="right" style="font-size: smaller;"> <a href = "https://doi.org/10.1017/S0022050700060976">
+>The History of Foreign Exchange</a></p>
+
 
 ## 📝 Table of Contents
 
@@ -25,13 +29,9 @@ exchange market with cryptocurrencies.
 
 ## 🧐 About <a name = "about"></a>
 
->*"Most theoretical monetary economists, even those who specialised in Foreign Exchanges, made
->relatively little use of the lessons taught by earlier periods of Foreign Exchange history. It is
->no wonder that practical experts responsible for devising and executing Foreign Exchange policies
->so often failed to benefit by the lessons of the past. Much theoretical knowledge and practical
->experience acquired by our forerunners is being largely wasted by being allowed to fade into
->oblivion."* <h5 align="right"> <a href = "https://doi.org/10.1017/S0022050700060976">The History of
->Foreign Exchange</a></h5>
+This project aims to provide an open currency exchange API that connects the traditional foreign
+exchange market with cryptocurrencies. See the README file that accompanies each crate for details
+about the implementation.
 
 ⚠️ Software under active development, not for production use... yet!
 

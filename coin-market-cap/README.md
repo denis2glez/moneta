@@ -74,5 +74,7 @@ Add notes about how to use the system.
 - [x] Add `listings/latest` module that consumes the endpoint `/v1/cryptocurrency/listings/latest`.
 - [x] Add PostgreSQL database for caching.
 - [x] Add Docker build recipe.
+- [ ] Use a tracing library for instrumentation (e.g `tracing` crate).
+- [ ] Include some micro-benchmarks (e.g. `criterion`).
 - [ ] Add Kubernetes deployment support (use [`minikube`](https://minikube.sigs.k8s.io/docs/),
     [`kubegres`](https://www.kubegres.io/doc/getting-started.html)).
