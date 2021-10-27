@@ -1,1 +1,8 @@
 # Development-only configuration
+# coin_market:
+#   # The sandbox API has mock data and should not be used in your live application.
+#   # This test API has several limitations and some mock data are not usable (e.g. `is_active`)
+#   base_url: "https://sandbox-api.coinmarketcap.com"
+#   # Public development key for the sandbox API.
+#   api_key: "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c"
+

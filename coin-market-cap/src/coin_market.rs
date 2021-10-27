@@ -139,14 +139,25 @@ pub mod map {
     /// By default this endpoint returns cryptocurrencies that have actively tracked markets on
     /// supported exchanges. You may receive a map of all inactive cryptocurrencies by passing
     /// `listing_status=inactive`.
-    pub async fn request_crypto_map() -> Result<Response, CmcError> {
+    pub async fn request_crypto_map(
+        start: u32,
+        limit: u32,
+        sort: &str,
+    ) -> Result<Response, CmcError> {
         let config = configuration::load_config()?;
 
         // Pull new data from the server
         let client = reqwest::Client::new();
+        let params = [
+            ("start", start.to_string()),
+            ("limit", limit.to_string()),
+            ("sort", sort.to_string()),
+        ];
+
         let response: Response = client
             .get(config.coin_market.base_url + "/v1/cryptocurrency/map")
             .header("X-CMC_PRO_API_KEY", config.coin_market.api_key)
+            .query(&params)
             .send()
             .await?
             .json()
@@ -265,7 +276,7 @@ impl App {
         limit: u32,
         convert: &str,
     ) -> Result<(), CmcError> {
-        let response_map = map::request_crypto_map().await?;
+        let response_map = map::request_crypto_map(start, limit, convert).await?;
         let response_listing = listing::request_crypto_listing(start, limit, convert).await?;
 
         // TODO: Currently we repopulate all tables in each update, this would change to keep the

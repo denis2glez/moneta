@@ -6,5 +6,8 @@ database:
   password: "password"
   database_name: "cryptos"
 coin_market:
+  # Live production environment with the latest market data.
+  # See comments in development settings.
   base_url: "https://pro-api.coinmarketcap.com"
-  api_key: "secret-token"
+  # Specify your API key.
+  api_key: "<secret-token>"

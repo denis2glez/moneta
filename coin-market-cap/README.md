@@ -59,10 +59,11 @@ cargo test -p coin-market-cap
 or just a specific group of tests, by adding `-- <pattern>` to filter. For instance,
 
 ```sh
-cargo t -p coin-market-cap -- cryptocurrency_listings_latest
+cargo t -p coin-market-cap -- crypto_listing
 ```
-would runt all tests related with the endpoint `listings_latest`. Note that some tests actually
-consume the endpoint, so be sure to set your API key first, otherwise they will fail.
+would runt all tests related with the endpoint `listings_latest`. Note that some tests (e.g.
+`fetch_crypto_listing`) actually consume the endpoint, so be sure to set your API key first,
+otherwise they will fail.
 
 ## Usage <a name = "usage"></a>
 
