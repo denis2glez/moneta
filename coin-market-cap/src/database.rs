@@ -4,7 +4,7 @@ use crate::coin_market::{listing, map};
 use crate::configuration::DbConfig;
 
 /// Update the databases `crypto_map` and `platforms` with data from `map::Response`.
-// TODO Keep an eye on the development around `sqlx::FromRow`.
+// TODO: Keep an eye on the development around `sqlx::FromRow`.
 pub async fn update_crypto_map(response: map::Response, pool: PgPool) -> Result<(), sqlx::Error> {
     for data in &response.data {
         let mut platform_id = None;
@@ -83,6 +83,7 @@ pub async fn update_crypto_listing(
 }
 
 /// **Warning:** This function *empties all the tables* in the database.
+// FIXME: Consider making this function private and the integration tests that use it, unit tests.
 pub async fn clear_all_tables(pool: PgPool) -> Result<(), sqlx::Error> {
     sqlx::query!("TRUNCATE TABLE crypto_platform CASCADE;")
         .execute(&pool)
@@ -91,6 +92,7 @@ pub async fn clear_all_tables(pool: PgPool) -> Result<(), sqlx::Error> {
     Ok(())
 }
 
+/// Returns an asynchronous pool of SQLx Postgres connections.
 pub fn get_connection_pool(config: &DbConfig) -> PgPool {
     PgPoolOptions::new()
         .connect_timeout(std::time::Duration::from_secs(2))

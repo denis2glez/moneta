@@ -24,14 +24,15 @@ of your subscription plan.
 ## Getting Started <a name = "getting_started"></a>
 
 These instructions will get you a copy of the project up and running on your local machine for
-development and testing purposes. See [deployment](../README.md#deployment) for notes on how to deploy the
-project on a live system.
+development and testing purposes. See [deployment](../README.md#deployment) for notes on how to
+deploy the project on a live system.
 
 ### Prerequisites
 
 - Install [Rust](https://www.rust-lang.org/tools/install)
 - Install [Docker](https://docs.docker.com/get-docker/)
-- Obtain an [API key](https://coinmarketcap.com/api/documentation/v1/#section/Quick-Start-Guide) from CoinMarketCap.
+- Obtain an [API key](https://coinmarketcap.com/api/documentation/v1/#section/Quick-Start-Guide)
+from CoinMarketCap.
 
 If you are using Arch Linux, you could install both dependencies by running:
 ```sh
@@ -40,7 +41,9 @@ sudo pacman -S rust docker
 
 ### Installing
 
-To get a development environment running, first change your current working directory to `coin-market-cap`
+To get a development environment running, first change your current working directory to
+`coin-market-cap`
+
 ```sh
 cd coin-market-cap
 ```
@@ -51,23 +54,25 @@ Then, create the Docker container with the database by running the following scr
 ./scripts/init_db.sh
 ```
 
-Now you can run all the tests
+Now you can run all the default tests
 
 ```sh
-cargo test -p coin-market-cap
+cargo test
 ```
 or just a specific group of tests, by adding `-- <pattern>` to filter. For instance,
 
 ```sh
-cargo t -p coin-market-cap -- crypto_listing
+cargo test -- crypto_listing
 ```
 would runt all tests related with the endpoint `listings_latest`. Note that some tests (e.g.
-`fetch_crypto_listing`) actually consume the endpoint, so be sure to set your API key first,
-otherwise they will fail.
+`fetch_crypto_listing`) actually consume the endpoint and are marked as `ignore`. Make sure to set
+your API key first, otherwise these group of tests will fail. Then you can run them as follows:
+ ```sh
+cargo test -- --ignored
+```
 
 ## Usage <a name = "usage"></a>
-
-Add notes about how to use the system.
+TODO: Add notes about how to use the system.
 
 ## Roadmap <a name = "roadmap"></a>
 
