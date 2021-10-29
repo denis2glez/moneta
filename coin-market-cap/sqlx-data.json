@@ -1,3 +1,80 @@
 {
-  "db": "PostgreSQL"
+  "db": "PostgreSQL",
+  "07bf6c0700305df56e5c4f62204dea25309a087bbc2b663147b442211f4b8467": {
+    "query": "INSERT INTO crypto_listing VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,\n                                $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4",
+          "TextArray",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Int4",
+          "Int4",
+          "Text",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Numeric",
+          "Timestamptz"
+        ]
+      },
+      "nullable": []
+    }
+  },
+  "47c2848e9a802fe5df0b578989c91b8aad3709e4da7460c8363a56d767672c05": {
+    "query": "TRUNCATE TABLE crypto_platform CASCADE;",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": []
+    }
+  },
+  "a2ec7af360fe7e467e72fb8b8619dd3b3bffea1af14afbef76b87ca84e4f04a3": {
+    "query": "INSERT INTO crypto_platform VALUES ($1, $2, $3);",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4",
+          "Text"
+        ]
+      },
+      "nullable": []
+    }
+  },
+  "d229f3468204ed4184b4f3e1335d089d9c46b4e416e4caf01a8c4ba3ac6db7aa": {
+    "query": "INSERT INTO crypto_map VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Text",
+          "Text",
+          "Text",
+          "Int4",
+          "Bool",
+          "Timestamptz",
+          "Timestamptz",
+          "Int4"
+        ]
+      },
+      "nullable": []
+    }
+  }
 }
