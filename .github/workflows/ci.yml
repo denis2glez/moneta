@@ -31,6 +31,10 @@ jobs:
   config:
     name: Set up environment
     runs-on: ubuntu-latest
+    defaults:
+      # Change current working directory
+      run:
+        working-directory: ./coin-market-cap
     services:
       postgres:
         image: postgres:latest
@@ -39,7 +43,7 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: postgres
         ports:
-          - 5432:5454
+          - 5432:5432
     env:
       SQLX_VERSION: 0.5.9
       SQLX_FEATURES: postgres
@@ -89,13 +93,13 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
+          SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Check that offline mode query metadata is up-to-date
         run: |
           cargo sqlx prepare --check -- --bin coin-market-cap
 
-      - name: Run cargo test --package coin-market-cap
+      - name: Run cargo test
         uses: actions-rs/cargo@v1
         with:
           command: test
@@ -126,7 +130,7 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: postgres
         ports:
-          - 5432:5454
+          - 5432:5432
     env:
       SQLX_VERSION: 0.5.9
       SQLX_FEATURES: postgres
@@ -165,7 +169,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
+          SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Run clippy
         uses: actions-rs/clippy-check@v1
@@ -184,7 +188,7 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: postgres
         ports:
-          - 5432:5454
+          - 5432:5432
     env:
       SQLX_VERSION: 0.5.9
       SQLX_FEATURES: postgres
@@ -222,7 +226,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
+          SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
