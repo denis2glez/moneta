@@ -107,6 +107,9 @@ jobs:
   fmt:
     name: Run rustfmt
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./coin-market-cap
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -122,6 +125,9 @@ jobs:
   clippy:
     name: Run clippy
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./coin-market-cap
     services:
       postgres:
         image: postgres:latest
@@ -180,6 +186,9 @@ jobs:
   coverage:
     name: Code coverage
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./coin-market-cap
     services:
       postgres:
         image: postgres:latest
