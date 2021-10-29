@@ -89,7 +89,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./scripts/init_db.sh
+          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
 
       - name: Check that offline mode query metadata is up-to-date
         run: |
@@ -165,7 +165,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./scripts/init_db.sh
+          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
 
       - name: Run clippy
         uses: actions-rs/clippy-check@v1
@@ -222,7 +222,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./scripts/init_db.sh
+          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
 
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
