@@ -12,7 +12,6 @@ on:
   push:
     branches:
       - staging
-      - trying
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -27,10 +26,15 @@ env:
   VERBOSE: ${{ github.events.input.verbose }}
 
 jobs:
-  # this job set up configuration shared among jobs
+  # TODO: Take a look to https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
+  # to possibly share this configuration among jobs.
   config:
     name: Set up environment
     runs-on: ubuntu-latest
+    defaults:
+      # Change current working directory
+      run:
+        working-directory: ./coin-market-cap
     services:
       postgres:
         image: postgres:latest
@@ -89,13 +93,79 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
+          SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Check that offline mode query metadata is up-to-date
         run: |
           cargo sqlx prepare --check -- --bin coin-market-cap
 
-      - name: Run cargo test --package coin-market-cap
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./coin-market-cap
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+    env:
+      SQLX_VERSION: 0.5.9
+      SQLX_FEATURES: postgres
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Cache sqlx-cli
+        uses: actions/cache@v2
+        id: cache-sqlx
+        with:
+          path: |
+            ~/.cargo/bin/sqlx
+            ~/.cargo/bin/cargo-sqlx
+          key: ${{ runner.os }}-sqlx-${{ env.SQLX_VERSION }}-${{ env.SQLX_FEATURES }}
+
+      - name: Install sqlx-cli
+        uses: actions-rs/cargo@v1
+        if: steps.cache-sqlx.outputs.cache-hit == false
+        with:
+          command: install
+          args: >
+            sqlx-cli
+            --force
+            --version=${{ env.SQLX_VERSION }}
+            --features=${{ env.SQLX_FEATURES }}
+            --no-default-features
+            --locked
+
+      - name: Migrate database
+        run: |
+          sudo apt-get install -y libpq-dev
+          SKIP_DOCKER=true ./scripts/init_db.sh
+
+      - name: Run cargo test
         uses: actions-rs/cargo@v1
         with:
           command: test
@@ -103,6 +173,9 @@ jobs:
   fmt:
     name: Run rustfmt
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./coin-market-cap
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -118,6 +191,9 @@ jobs:
   clippy:
     name: Run clippy
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./coin-market-cap
     services:
       postgres:
         image: postgres:latest
@@ -165,7 +241,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
+          SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Run clippy
         uses: actions-rs/clippy-check@v1
@@ -176,6 +252,9 @@ jobs:
   coverage:
     name: Code coverage
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./coin-market-cap
     services:
       postgres:
         image: postgres:latest
@@ -222,7 +301,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install -y libpq-dev
-          SKIP_DOCKER=true ./coin-market-cap/scripts/init_db.sh
+          SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1

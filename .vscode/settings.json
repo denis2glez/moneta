@@ -3,7 +3,7 @@
         {
             "previewLimit": 50,
             "server": "localhost",
-            "port": 5454,
+            "port": 5432,
             "driver": "PostgreSQL",
             "name": "cryptos",
             "database": "cryptos",
