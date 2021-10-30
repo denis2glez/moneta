@@ -276,7 +276,7 @@ impl App {
         limit: u32,
         convert: &str,
     ) -> Result<(), CmcError> {
-        let response_map = map::request_crypto_map(start, limit, convert).await?;
+        let response_map = map::request_crypto_map(start, 2*limit, "cmc_rank").await?;
         let response_listing = listing::request_crypto_listing(start, limit, convert).await?;
 
         // TODO: Currently we repopulate all tables in each update, this would change to keep the

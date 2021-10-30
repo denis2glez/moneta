@@ -1,0 +1,59 @@
+FROM rust:1.56 AS chef
+
+RUN rustup target add x86_64-unknown-linux-musl
+RUN apt-get update && apt-get install -y musl-tools musl-dev
+RUN update-ca-certificates
+RUN cargo install cargo-chef cargo-strip
+
+# Create a non-privileged user `app_user`.
+ENV USER=app_user
+ENV UID=10001
+
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
+
+WORKDIR /app
+
+
+FROM chef as planner
+COPY . .
+# Compute a lock file for the project dependencies.
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef as builder
+COPY --from=planner /app/recipe.json recipe.json
+# Build the project dependencies, not the application!
+RUN cargo chef cook --release --recipe-path recipe.json
+COPY . .
+ENV SQLX_OFFLINE true
+# Build the project by specifying the musl target.
+RUN cargo build --target x86_64-unknown-linux-musl --release --bin coin-market-cap
+
+# We just strip the binary, given that by default on Linux and macOS, symbol information is
+# included in the compiled ELF file. Additionally, we could enable LTO, reduce `codegen-units`, etc.
+# Until the case of optimizing for the size (i.e. `opt-level = "z"`).
+# Nightly cargo has strip functionality built-in (see https://doc.rust-lang.org/cargo/reference/unstable.html#profile-strip-option)
+RUN cargo strip --target x86_64-unknown-linux-musl
+
+FROM scratch
+# Import from builder.
+COPY --from=builder /etc/passwd /etc/passwd
+COPY --from=builder /etc/group /etc/group
+
+WORKDIR /app
+
+# Copy our build.
+COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/coin-market-cap coin-market-cap
+COPY config config
+ENV APP_ENVIRONMENT prod
+
+# Run as the non-privileged user.
+USER app_user:app_user
+
+ENTRYPOINT ["./coin-market-cap"]
