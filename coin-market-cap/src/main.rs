@@ -14,7 +14,7 @@ static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 // experimental.
 #[tokio::main]
 async fn main() -> Result<(), CmcError> {
-    let duration = Duration::from_secs(5*60);
+    let duration = Duration::from_secs(5 * 60);
     let app = App::new();
 
     loop {
