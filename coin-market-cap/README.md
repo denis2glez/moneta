@@ -39,16 +39,23 @@ If you are using Arch Linux, you could install both dependencies by running:
 sudo pacman -S rust docker
 ```
 
-### Installing
+### Setup, build, check and test
+TODO: I need to describe the setup (i.e. `psql`, `sqlx-cli`, etc.)
 
 To get a development environment running, first change your current working directory to
 `coin-market-cap`
 
 ```sh
 cd coin-market-cap
+
+
+```
+Quickly check the package and all of its dependencies for possible errors.
+```sh
+cargo check
 ```
 
-Then, create the Docker container with the database by running the following script
+Then, create and initialize the Docker container with the database by running the following script
 
 ```sh
 ./scripts/init_db.sh
@@ -71,6 +78,24 @@ your API key first, otherwise these group of tests will fail. Then you can run t
 cargo test -- --ignored
 ```
 
+### Build and run using Docker
+
+Otherwise, we could build the application using one of the Docker recipes in the `docker` directory.
+For instance, 
+```sh
+docker build --tag coin-market-cap_debian --file docker/Dockerfile.debian .
+```
+Then, execute it locally as
+
+```sh
+docker run --network host coin-market-cap_debian
+```
+In case you choose some of the `musl`-based targets (i.e. `Dockerfile.alpine` or `Dockerfile.scratch`),
+it is [currently](https://github.com/richfelker/mallocng-draft)
+recommended to bring an alternative high-performance `malloc` implementation. You could use the
+crate `jemallocator` that provides an allocator using [`jemalloc`](http://jemalloc.net) as a backend.
+See [`Cargo.toml`](./Cargo.toml) for the default configuration used.
+
 ## Usage <a name = "usage"></a>
 TODO: Add notes about how to use the system.
 
@@ -79,7 +104,9 @@ TODO: Add notes about how to use the system.
 - [x] Add `map` module that consumes the endpoint `/v1/cryptocurrency/map`.
 - [x] Add `listings/latest` module that consumes the endpoint `/v1/cryptocurrency/listings/latest`.
 - [x] Add PostgreSQL database for caching.
-- [x] Add Docker build recipe.
+- [x] Add Docker build recipes (see `docker` directory).
+- [x] Setup CI/CD (use [GitHub Actions](https://github.com/actions-rs)).
+- [x] Add code coverage reports (e.g. [CodeCov](https://codecov.io/))
 - [ ] Use a tracing library for instrumentation (e.g `tracing` crate).
 - [ ] Include some micro-benchmarks (e.g. `criterion`).
 - [ ] Add Kubernetes deployment support (use [`minikube`](https://minikube.sigs.k8s.io/docs/),
