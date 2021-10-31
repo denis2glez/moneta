@@ -56,7 +56,8 @@ serial_test = "0.5.1"
 [target.'cfg(all(target_env = "musl", target_pointer_width = "64"))'.dependencies.jemallocator]
 version = "0.3.2"
 
-[target.'cfg(all(target_env = "musl", target_pointer_width = "64"))'.profile.release]
+# cargo doesn't yet support per-target profiles (https://github.com/rust-lang/cargo/issues/4897)
+[profile.release]
 opt-level = 3
 debug = false
 lto = true
