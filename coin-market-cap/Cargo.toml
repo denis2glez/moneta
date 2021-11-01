@@ -55,11 +55,3 @@ serial_test = "0.5.1"
 # Special configuration for musl-64 bits platforms (jemalloc doesn't support i686)
 [target.'cfg(all(target_env = "musl", target_pointer_width = "64"))'.dependencies.jemallocator]
 version = "0.3.2"
-
-# cargo doesn't yet support per-target profiles (https://github.com/rust-lang/cargo/issues/4897)
-[profile.release]
-opt-level = 3
-debug = false
-lto = true
-codegen-units = 1
-panic = "abort"
