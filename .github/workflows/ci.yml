@@ -92,7 +92,7 @@ jobs:
 
       - name: Migrate database
         run: |
-          sudo apt-get install -y libpq-dev
+          sudo apt-get install -y postgresql-client
           SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Check that offline mode query metadata is up-to-date
@@ -162,7 +162,7 @@ jobs:
 
       - name: Migrate database
         run: |
-          sudo apt-get install -y libpq-dev
+          sudo apt-get install -y postgresql-client
           SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Run cargo test
@@ -240,7 +240,7 @@ jobs:
 
       - name: Migrate database
         run: |
-          sudo apt-get install -y libpq-dev
+          sudo apt-get install -y postgresql-client
           SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Run clippy
@@ -300,7 +300,7 @@ jobs:
 
       - name: Migrate database
         run: |
-          sudo apt-get install -y libpq-dev
+          sudo apt-get install -y postgresql-client
           SKIP_DOCKER=true ./scripts/init_db.sh
 
       - name: Run cargo-tarpaulin

@@ -17,10 +17,8 @@ designed to meet the mission-critical demands of application developers, data sc
 enterprise business platforms."*
 
 This library implements a Rust client of their API while using a data caching strategy based on a
-local SQL database to avoid concerns with staying within the call credit and API throttling limits
+migrated SQL database to avoid concerns with staying within the call credit and API throttling limits
 of your subscription plan.
-
-**Disclosure:** I don't have any type of relationship with CoinMarketCap.
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -123,7 +121,7 @@ cargo run --release
 ```
 Of course, this assumes that your API key is set.
 
-### Build and run using Docker
+### Build and run using Docker <a name = "using_docker"></a>
 
 Otherwise, we could build the application using one of the Docker recipes in the `docker` directory.
 For instance, 
