@@ -1,7 +1,7 @@
 use sqlx::{postgres::PgPoolOptions, PgPool};
 
-use crate::cfx::*;
 use crate::config::DbConfig;
+use crate::model::*;
 
 /// Returns all rows in table `crypto_map` as a `Vec<CryptoMap>`.
 pub async fn get_crypto_map(pool: &PgPool) -> Result<Vec<CryptoMap>, sqlx::Error> {
