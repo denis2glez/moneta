@@ -43,7 +43,7 @@ pub struct CryptoListing {
     /// Approximate total amount of coins in existence right now (minus any coins that have been
     /// verifiably burned).
     pub total_supply: Decimal,
-    pub platform: i32,
+    pub platform: Option<i32>,
     /// CoinMarketCap's market cap rank as outlined in [their methodology](https://coinmarketcap.com/methodology/).
     /// Cryptocurrencies are listed by `cmc_rank` by default.
     pub cmc_rank: i32,

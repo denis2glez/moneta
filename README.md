@@ -98,7 +98,7 @@ cargo install sqlx-cli --no-default-features --features postgres
 
 At this time it is possible to deploy `coin-market-cap` using one of the Docker
 [recipes](./coin-market-cap/README.md#using_docker) in the crate. But the plan is to make the
-complete deployment using Kubernetes (see the [roadmap](./crypto-forex/README.md#roadmap)).
+full project deployment using Kubernetes (see the [roadmap](./crypto-forex/README.md#roadmap)).
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
