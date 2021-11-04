@@ -1,5 +1,5 @@
+use crypto_forex::cfx::{self, CfxError};
 use crypto_forex::config;
-use crypto_forex::route::{self, CfxError};
 
 /// Entry point of the `crypto_forex` application responsible for serving information about
 /// cryptocurrencies through a Restful API consisting of the following endpoints:
@@ -11,7 +11,7 @@ use crypto_forex::route::{self, CfxError};
 #[actix_web::main]
 async fn main() -> Result<(), CfxError> {
     let config = config::load_config()?;
-    let server = route::CfxServer::build(config).await?;
+    let server = cfx::CfxServer::build(config).await?;
     server.run().await?;
 
     Ok(())
