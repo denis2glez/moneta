@@ -1,6 +1,6 @@
 <div align="center">
   <a href="" rel="noopener">
- <img src="https://user-images.githubusercontent.com/30119590/140491687-83dbb636-b679-41b5-b70a-def7754f054b.png" alt="Project logo"></a>
+ <img src="https://user-images.githubusercontent.com/30119590/140493098-3d387075-3eac-4ccd-aece-84d7de24d364.png" alt="Project logo"></a>
 </div>
 
 <h3 align="center"> <b>crypto-forex</b>: opening the cryptocurrency exchange to the forex market </h3>
