@@ -1,6 +1,5 @@
 <div align="center">
-  <a href="" rel="noopener">
- <img src="https://user-images.githubusercontent.com/30119590/140493098-3d387075-3eac-4ccd-aece-84d7de24d364.png" alt="Project logo"></a>
+ <img src="https://user-images.githubusercontent.com/30119590/140493098-3d387075-3eac-4ccd-aece-84d7de24d364.png" alt="Project logo">
 </div>
 
 <h3 align="center"> <b>crypto-forex</b>: opening the cryptocurrency exchange to the forex market </h3>
@@ -34,6 +33,9 @@ exchange market with cryptocurrencies. With this goal in mind,
 
 - [`coin-market-cap`](./coin-market-cap/README.md) crate implements a Rust client of the
   CoinMarketCap API while using a data caching strategy based on a migrated SQL database. 
+  
+- [`binance`](./binance/README.md) crate implements a Rust client of the Binance Public Spot API 
+  while using a data caching strategy based on a migrated SQL database.
 
 - [`crypto-forex`](./crypto-forex/README.md) crate provides the core backend server that offers both
   a REST API and a high-performance RPC API, while consuming the migrated SQL database from

@@ -99,7 +99,8 @@ curl -v http://127.0.0.1:8080/health_check
 
 ## Roadmap <a name = "roadmap"></a>
 
-- [ ] Add a REST API to cover the base use case.
+- [ ] Add a REST API to cover the base use case (contract using
+  [`cmc-openapi`](https://github.com/denis2glez/cmc-openapi)).
 - [ ] Implement a remote procedure call system (i.e. gRPC).
 - [ ] Create unit and integration tests.
 - [ ] Use a tracing library for instrumentation (e.g `tracing` crate).
