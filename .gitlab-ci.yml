@@ -9,6 +9,9 @@ image: "rust:latest"
 #   - redis:latest
 #   - postgres:latest
 
+variables:
+  SQLX_OFFLINE: "true"
+
 stages:
   - check
   - build
@@ -27,10 +30,12 @@ default:
   before_script:
     - cd coin-market-cap
     - *check-rust
+    - cargo install sqlx-cli --no-default-features --features postgres
 
 check-all:
   stage: check
   script:
+    - rustup component add clippy
     - cargo clippy -- -D warnings
   cache:
     key: "$CI_COMMIT_REF_SLUG"
@@ -51,6 +56,7 @@ build-all:
 test-all-mr:
   stage: test
   script:
+    - cargo install cargo-tarpaulin
     - cargo tarpaulin -v
   coverage: /\d+.\d+% coverage/
   cache:
@@ -64,6 +70,7 @@ test-all-mr:
 test-all-main:
   stage: test
   script:
+    - cargo install cargo-tarpaulin
     - cargo tarpaulin -v
   coverage: /\d+.\d+% coverage/
   cache:
