@@ -57,7 +57,7 @@ test-all-mr:
   stage: test
   script:
     - cargo install cargo-tarpaulin
-    - cargo tarpaulin -v
+    - cargo tarpaulin -v -- --skip update
   coverage: /\d+.\d+% coverage/
   cache:
     key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
@@ -71,7 +71,7 @@ test-all-main:
   stage: test
   script:
     - cargo install cargo-tarpaulin
-    - cargo tarpaulin -v
+    - cargo tarpaulin -v -- --skip update
   coverage: /\d+.\d+% coverage/
   cache:
     key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
