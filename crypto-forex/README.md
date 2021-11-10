@@ -101,6 +101,8 @@ curl -v http://127.0.0.1:8080/health_check
 
 - [ ] Add a REST API to cover the base use case (contract using
   [`cmc-openapi`](https://github.com/denis2glez/cmc-openapi)).
+- [ ] Explore the [Coinbase API](https://developers.coinbase.com/) instead
+  (see [coinbase-pro-rs)](https://github.com/denis2glez/coinbase-pro-rs)).
 - [ ] Implement a remote procedure call system (i.e. gRPC).
 - [ ] Create unit and integration tests.
 - [ ] Use a tracing library for instrumentation (e.g `tracing` crate).

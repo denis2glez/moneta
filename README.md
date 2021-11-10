@@ -32,10 +32,7 @@ This project aims to provide an open currency exchange API that connects the tra
 exchange market with cryptocurrencies. With this goal in mind,
 
 - [`coin-market-cap`](./coin-market-cap/README.md) crate implements a Rust client of the
-  CoinMarketCap API while using a data caching strategy based on a migrated SQL database. 
-  
-- [`binance`](./binance/README.md) crate implements a Rust client of the Binance Public Spot API 
-  while using a data caching strategy based on a migrated SQL database.
+  CoinMarketCap API while using a data caching strategy based on a migrated SQL database.
 
 - [`crypto-forex`](./crypto-forex/README.md) crate provides the core backend server that offers both
   a REST API and a high-performance RPC API, while consuming the migrated SQL database from
