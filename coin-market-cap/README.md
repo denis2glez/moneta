@@ -133,8 +133,8 @@ Then execute it using
 ```sh
 docker run --network host coin-market-cap_debian
 ```
-In case you choose some of the `musl`-based targets (i.e. `Dockerfile.alpine` or `Dockerfile.scratch`),
-it is [currently](https://github.com/richfelker/mallocng-draft)
+In case you choose some of the `musl`-based targets (i.e. `Dockerfile.alpine` or `Dockerfile.scratch`)
+for performance-sensitive code, it is [currently](https://github.com/richfelker/mallocng-draft)
 recommended to bring an alternative high-performance `malloc` implementation. You could use the
 crate `jemallocator` that provides an allocator using [`jemalloc`](http://jemalloc.net) as a backend.
 See [`Cargo.toml`](./Cargo.toml) for the default configuration used.

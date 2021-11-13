@@ -110,5 +110,7 @@ curl -v http://127.0.0.1:8080/health_check
 - [ ] Add code coverage reports (e.g. [CodeCov](https://codecov.io/))
 - [ ] Add support for mocking (e.g. `fake`, `mockall`, `wiremock`).
 - [ ] Include some micro-benchmarks (e.g. `criterion`).
+- [ ] Integrate [`ClusterFuzzLite`](https://google.github.io/clusterfuzzlite) into the GitHub
+  workflow to fuzz the code using [`cargo-fuzz`](https://github.com/rust-fuzz/cargo-fuzz).
 - [ ] Add Kubernetes deployment support (use [`minikube`](https://minikube.sigs.k8s.io/docs/),
-    [`kubegres`](https://www.kubegres.io/doc/getting-started.html)).
+  [`kubegres`](https://www.kubegres.io/doc/getting-started.html)).
