@@ -1,14 +1,20 @@
 # A CoinMarketCap API Rust client 
 
 ## Table of Contents
+- [A CoinMarketCap API Rust client](#a-coinmarketcap-api-rust-client)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Quick check](#quick-check)
+  - [Build](#build)
+  - [Run tests](#run-tests)
+  - [Usage](#usage)
+    - [Build and run using Docker](#build-and-run-using-docker)
+  - [Roadmap](#roadmap)
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Setup](#setup)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
-
-## About <a name = "about"></a>
+## About
 
 According to [CoinMarketCap](https://coinmarketcap.com/api/documentation/v1/#section/Introduction):
 
@@ -20,7 +26,7 @@ This library implements a Rust client of their API while using a data caching st
 migrated SQL database to avoid concerns with staying within the call credit and API throttling limits
 of your subscription plan.
 
-## Getting Started <a name = "getting_started"></a>
+## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for
 development and testing purposes. See [deployment](../README.md#deployment) for notes on how to
@@ -79,7 +85,7 @@ cargo install sqlx-cli --no-default-features --features postgres
 ```
 </details>
 
-## Setup <a name = "setup"></a>
+## Setup
 
 To get a development environment running, first change your current working directory to
 `coin-market-cap`.
@@ -128,7 +134,7 @@ your API key first, otherwise these group of tests will fail. Then you can run t
 cargo test -- --ignored
 ```
 
-## Usage <a name = "usage"></a>
+## Usage
 
 To run the application on your host machine
 
@@ -141,7 +147,7 @@ cargo run --release
 ```
 Of course, this assumes that your API key is set.
 
-### Build and run using Docker <a name = "using_docker"></a>
+### Build and run using Docker
 
 Otherwise, we could build the application using one of the Docker recipes in the `docker` directory.
 For instance, 
@@ -160,7 +166,7 @@ crate `jemallocator` that provides an allocator using [`jemalloc`](http://jemall
 See [`Cargo.toml`](./Cargo.toml) for the default configuration used.
 
 
-## Roadmap <a name = "roadmap"></a>
+## Roadmap
 
 - [x] Add `map` module that consumes the endpoint `/v1/cryptocurrency/map`.
 - [x] Add `listings/latest` module that consumes the endpoint `/v1/cryptocurrency/listings/latest`.

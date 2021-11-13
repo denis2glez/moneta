@@ -1,20 +1,23 @@
 # `crypto-forex` core backend
 
 ## Table of Contents
+- [`crypto-forex` core backend](#crypto-forex-core-backend)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Setup](#setup)
+  - [Usage](#usage)
+  - [Roadmap](#roadmap)
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
-
-## About <a name = "about"></a>
+## About
 
 This crate contains the core backend implementation of the project, aiming to be correct and
 high-performance. Specifically, it consumes a migrated PostgreSQL database, while offering the
 different *families* of endpoints to client applications. Check the [root readme](../README.md) file
 to get an overview of the project.
 
-## Getting Started <a name = "getting_started"></a>
+## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for
 development and testing purposes. See [deployment](../README.md#deployment) for notes on how to
@@ -62,7 +65,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 </details>
 
-### Setup <a name = "setup"></a>
+### Setup
 
 This crate assumes that you have a populated database running, see the [configuration](./config/base.yaml).
 One way to do this is by [setting up](./coin-market-cap/README.md#setup) and running the `coin-market-cap` application first. Just remember that this requires setting the API key.
@@ -99,7 +102,7 @@ or just a specific group of tests, by adding `-- <pattern>` to filter. For insta
 cargo test -p crypto-forex -- <pattern>
 ```
 
-## Usage <a name = "usage"></a>
+## Usage
 
 To execute the `crypto-forex` binary on your development machine
 ```sh
@@ -115,7 +118,7 @@ After which a health check is always advised
 curl -v http://127.0.0.1:8080/health_check
 ```
 
-## Roadmap <a name = "roadmap"></a>
+## Roadmap
 
 - [ ] Add a REST API to cover the base use case (contract using
   [`cmc-openapi`](https://github.com/denis2glez/cmc-openapi)).
