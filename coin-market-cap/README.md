@@ -37,19 +37,24 @@ deploy the project on a live system.
 - Obtain an [API key](https://coinmarketcap.com/api/documentation/v1/#section/Quick-Start-Guide)
   from CoinMarketCap.
 
-#### Arch Linux
-If you are using Arch Linux or a derivative, you could install all the dependencies by running the
-following commands.
+<details open>
+<summary><font size="6">Arch Linux</font></summary>
+
+If you are using Arch Linux or a derivative, you could install all the development dependencies by
+running the following commands.
 ```sh
 sudo pacman -S rust docker postgresql
 # Install sqlx-cli only for postgres
 cargo install sqlx-cli --no-default-features --features postgres
 ```
+</details>
 
-#### Debian
+<details open>
+<summary><font size="6">Debian</font></summary>
+
 If you are using Debian or a derivative (e.g. Ubuntu, Linux Mint), it is recommended to install Rust
-using the standard installation script. You could install all the dependencies by running the
-following commands.
+using the standard installation script. You could install all the development dependencies by running
+the following commands.
 ```sh
 # sqlx-cli needs libssl-dev and curl is used next
 sudo apt install docker postgresql-client curl libssl-dev
@@ -58,6 +63,21 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Install sqlx-cli only for postgres
 cargo install sqlx-cli --no-default-features --features postgres
 ```
+</details>
+
+<details open>
+<summary><font size="6">macOS</font></summary>
+
+If you are using macOS you could install all the development dependencies using [Homebrew](https://brew.sh)
+by running the following commands.
+```sh
+brew install curl docker postgresql
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# Install sqlx-cli only for postgres
+cargo install sqlx-cli --no-default-features --features postgres
+```
+</details>
 
 ## Setup <a name = "setup"></a>
 

@@ -22,7 +22,6 @@
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
-- [Built Using](#built_using)
 - [Acknowledgments](#acknowledgement)
 - [License](#license)
 
@@ -71,7 +70,9 @@ For details on how to configure a development environment, take a look at
 [`coin-market-cap`](./coin-market-cap/README.md#setup) setup section and
 [`crypto-forex`](./crypto-forex/README.md#setup) setup section, respectively.
 
-### Arch Linux
+<details open>
+<summary><font size="6">Arch Linux</font></summary>
+
 If you are using Arch Linux or a derivative, you could install all the development dependencies by
 running the following commands.
 ```sh
@@ -79,8 +80,11 @@ sudo pacman -S curl git rust docker postgresql
 # Install sqlx-cli only for postgres
 cargo install sqlx-cli --no-default-features --features postgres
 ```
+</details>
 
-### Debian
+<details open>
+<summary><font size="6">Debian</font></summary>
+
 If you are using Debian or a derivative (e.g. Ubuntu, Linux Mint), it is recommended to install Rust
 using the standard installation script. You could install all the development dependencies by running
 the following commands.
@@ -92,6 +96,25 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Install sqlx-cli only for postgres
 cargo install sqlx-cli --no-default-features --features postgres
 ```
+</details>
+
+<details open>
+<summary><font size="6">macOS</font></summary>
+
+If you are using macOS you could install all the development dependencies using [Homebrew](https://brew.sh)
+by running the following commands.
+```sh
+brew install curl git docker postgresql
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# Install sqlx-cli only for postgres
+cargo install sqlx-cli --no-default-features --features postgres
+```
+</details>
+
+## 🎈 Usage <a name = "usage"></a>
+
+See the *usage* section of each crate's README file.
 
 ## 🚀 Deployment <a name = "deployment"></a>
 
