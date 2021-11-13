@@ -71,7 +71,7 @@ For details on how to configure a development environment, take a look at
 [`crypto-forex`](./crypto-forex/README.md#setup) setup section, respectively.
 
 <details open>
-<summary><font size="6">Arch Linux</font></summary>
+<summary><b>Arch Linux</b></summary>
 
 If you are using Arch Linux or a derivative, you could install all the development dependencies by
 running the following commands.
@@ -83,7 +83,7 @@ cargo install sqlx-cli --no-default-features --features postgres
 </details>
 
 <details open>
-<summary><font size="6">Debian</font></summary>
+<summary><b>Debian</b></summary>
 
 If you are using Debian or a derivative (e.g. Ubuntu, Linux Mint), it is recommended to install Rust
 using the standard installation script. You could install all the development dependencies by running
@@ -99,7 +99,7 @@ cargo install sqlx-cli --no-default-features --features postgres
 </details>
 
 <details open>
-<summary><font size="6">macOS</font></summary>
+<summary><b>macOS</b></summary>
 
 If you are using macOS you could install all the development dependencies using [Homebrew](https://brew.sh)
 by running the following commands.
