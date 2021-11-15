@@ -1,0 +1,13 @@
+[package]
+name = "coin-base"
+authors = ["Denis Deniz González <denis2.glez@gmail.com>"]
+license = "Apache-2.0"
+repository = "https://github.com/denis2glez/moneta"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "1.13.1", features = ["full"] }
+coinbase-pro-rs = "0.7.1"
