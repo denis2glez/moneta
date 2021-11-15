@@ -1,6 +1,6 @@
 [workspace]
 
-members = ["crypto-forex", "coin-market-cap"]
+members = ["crypto-forex", "coin-market-cap", "coin-base"]
 
 # cargo doesn't yet support per-target profiles (https://github.com/rust-lang/cargo/issues/4897)
 # [profile.release]
