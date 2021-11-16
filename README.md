@@ -127,4 +127,4 @@ full project deployment using Kubernetes (see the [roadmap](./crypto-forex/READM
 Thanks to all the developers of the libraries used throughout the project.
 
 ## 📝 License <a name = "license"></a>
-This project is licensed under the [MIT](./crypto-forex/LICENSE) license.
+This project is licensed under the [MIT](LICENSE) license.
