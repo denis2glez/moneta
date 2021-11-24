@@ -1,4 +1,4 @@
-use coinbase_pro_rs::{ASync, Public, SANDBOX_URL};
+use coinbase::{ASync, Public, SANDBOX_URL};
 
 #[allow(unused)]
 async fn get_time() {

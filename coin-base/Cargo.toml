@@ -10,4 +10,4 @@ edition = "2021"
 
 [dependencies]
 tokio = { version = "1.13.1", features = ["full"] }
-coinbase-pro-rs = "0.7.1"
+coinbase = { package = "coinbase-pro-rs", version = "0.7.1" }
