@@ -43,12 +43,11 @@ See the README file that accompanies each crate for details about the implementa
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-**Disclaimer:** I don't have any type of relationship with CoinMarketCap.
+**Disclaimer:** I don't have any type of relationship with CoinMarketCap or Coinbase.
 
 ## Prerequisites
 
-For development, you need a Unix-like environment for now. If you are running Windows, you can use
-the Windows Subsystem for Linux ([WSL](https://docs.microsoft.com/en-us/windows/wsl/install)).
+Take a look at your system setup section below for details.
 
 - Install `curl`, `git`.
 - Install [Rust](https://www.rust-lang.org/tools/install).
@@ -59,9 +58,6 @@ the Windows Subsystem for Linux ([WSL](https://docs.microsoft.com/en-us/windows/
   [`sqlx-cli`](https://crates.io/crates/sqlx-cli).
 - Obtain an [API key](https://coinmarketcap.com/api/documentation/v1/#section/Quick-Start-Guide)
   from CoinMarketCap.
-
-If you don't know how to install a prerequisite on your system, please check out the links provided
-for each of them above.
 
 ## 🔧 Setup
 
@@ -110,6 +106,28 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Install sqlx-cli only for postgres
 cargo install sqlx-cli --no-default-features --features postgres
 ```
+</details>
+
+<details open>
+<summary><b>Windows</b></summary>
+
+If you are using Windows, you could install all the required dependencies using the
+[`winget`](https://docs.microsoft.com/en-us/windows/package-manager/winget/#production-recommended)
+CLI tool by running the following commands.
+
+```sh
+winget install --id Git.Git
+winget install --id Docker.DockerDesktop
+winget install --id Rustlang.Rust.MSVC
+winget install --id PostgreSQL.PostgreSQL
+# Install sqlx-cli only for postgres
+cargo install sqlx-cli --no-default-features --features postgres
+```
+
+You will be able to run the scripts on your Windows system if you use Git Bash. Otherwise, you could
+use the Windows Subsystem for Linux ([WSL](https://docs.microsoft.com/en-us/windows/wsl/install)).
+
+
 </details>
 
 ## 🎈 Usage <a name = "usage"></a>
